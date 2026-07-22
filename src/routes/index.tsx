@@ -56,7 +56,13 @@ function Index() {
   };
 
   return (
-    <div className={`min-h-dvh bg-background ${total > 0 ? 'pb-52 sm:pb-28' : 'pb-28'}`}>
+    <div
+      className={`min-h-dvh bg-background ${
+        total > 0
+          ? 'pb-[calc(8rem+env(safe-area-inset-bottom,0px))] sm:pb-10'
+          : 'pb-24 sm:pb-10'
+      }`}
+    >
       <Header />
       <div className="container mx-auto max-w-2xl space-y-6 p-4 pt-[calc(5.5rem+env(safe-area-inset-top,0px))]">
         <header>
@@ -88,7 +94,7 @@ function Index() {
             </button>
           </div>
         ) : (
-          <div className="space-y-7 pb-4 sm:pb-0">
+          <div className="space-y-7">
             <PeriodSection
               title="Manhã"
               icon={<Sunrise className="h-4 w-4 text-morning" />}
@@ -117,7 +123,7 @@ function Index() {
               onDelete={setToDelete}
             />
             {total > 0 && (
-              <div className="mb-10 hidden rounded-2xl border border-border bg-surface p-5 sm:block">
+              <div className="hidden rounded-2xl border border-border bg-surface p-5 sm:block">
                 <div className="flex items-baseline justify-between">
                   <div>
                     <div className="text-2xl font-semibold tracking-tight">
