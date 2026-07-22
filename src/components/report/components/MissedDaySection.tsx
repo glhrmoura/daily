@@ -29,7 +29,7 @@ export function MissedDaySection({
           className="flex min-w-0 flex-1 items-center justify-between gap-3 px-4 py-4 text-left"
         >
           <div className="min-w-0">
-            <div className="text-sm font-semibold capitalize">
+            <div className="text-base font-bold capitalize">
               {formatReportDate(report.date)}
             </div>
             <div className="mt-0.5 text-xs text-muted-foreground">
