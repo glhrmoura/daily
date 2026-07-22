@@ -9,34 +9,42 @@ const urlsToCache = [
   '/index.html',
   '/manifest.json',
   '/offline.html',
-  'https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap'
+  'https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap',
 ];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(STATIC_CACHE)
+    caches
+      .open(STATIC_CACHE)
       .then((cache) => {
         return cache.addAll(urlsToCache);
       })
       .then(() => {
         return self.skipWaiting();
-      })
+      }),
   );
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== STATIC_CACHE && cacheName !== DYNAMIC_CACHE && cacheName !== FONT_CACHE) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    }).then(() => {
-      return self.clients.claim();
-    })
+    caches
+      .keys()
+      .then((cacheNames) => {
+        return Promise.all(
+          cacheNames.map((cacheName) => {
+            if (
+              cacheName !== STATIC_CACHE &&
+              cacheName !== DYNAMIC_CACHE &&
+              cacheName !== FONT_CACHE
+            ) {
+              return caches.delete(cacheName);
+            }
+          }),
+        );
+      })
+      .then(() => {
+        return self.clients.claim();
+      }),
   );
 });
 
@@ -48,59 +56,67 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  if (url.origin !== location.origin && !url.hostname.includes('fonts.googleapis.com') && !url.hostname.includes('fonts.gstatic.com')) {
+  if (
+    url.origin !== location.origin &&
+    !url.hostname.includes('fonts.googleapis.com') &&
+    !url.hostname.includes('fonts.gstatic.com')
+  ) {
     return;
   }
 
   event.respondWith(
-    caches.match(request)
-      .then((cachedResponse) => {
-        if (cachedResponse) {
-          if (request.destination === 'document') {
-            fetch(request)
-              .then((networkResponse) => {
-                if (networkResponse.ok) {
-                  const responseClone = networkResponse.clone();
-                  caches.open(DYNAMIC_CACHE)
-                    .then((cache) => {
-                      cache.put(request, responseClone);
-                    });
-                }
-              })
-              .catch(() => {});
-          }
-          return cachedResponse;
+    caches.match(request).then((cachedResponse) => {
+      if (cachedResponse) {
+        if (request.destination === 'document') {
+          fetch(request)
+            .then((networkResponse) => {
+              if (networkResponse.ok) {
+                const responseClone = networkResponse.clone();
+                caches.open(DYNAMIC_CACHE).then((cache) => {
+                  cache.put(request, responseClone);
+                });
+              }
+            })
+            .catch(() => {});
         }
+        return cachedResponse;
+      }
 
-        return fetch(request)
-          .then((networkResponse) => {
-            if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-              return networkResponse;
-            }
-
-            const responseToCache = networkResponse.clone();
-            let cacheToUse = DYNAMIC_CACHE;
-
-            if (urlsToCache.includes(url.pathname) || urlsToCache.includes(request.url)) {
-              cacheToUse = STATIC_CACHE;
-            } else if (url.hostname.includes('fonts.googleapis.com') || url.hostname.includes('fonts.gstatic.com')) {
-              cacheToUse = FONT_CACHE;
-            }
-
-            caches.open(cacheToUse)
-              .then((cache) => {
-                cache.put(request, responseToCache);
-              });
-
+      return fetch(request)
+        .then((networkResponse) => {
+          if (
+            !networkResponse ||
+            networkResponse.status !== 200 ||
+            networkResponse.type !== 'basic'
+          ) {
             return networkResponse;
-          })
-          .catch(() => {
-            if (request.destination === 'document') {
-              return caches.match('/offline.html');
-            }
-            throw new Error('Network request failed');
+          }
+
+          const responseToCache = networkResponse.clone();
+          let cacheToUse = DYNAMIC_CACHE;
+
+          if (urlsToCache.includes(url.pathname) || urlsToCache.includes(request.url)) {
+            cacheToUse = STATIC_CACHE;
+          } else if (
+            url.hostname.includes('fonts.googleapis.com') ||
+            url.hostname.includes('fonts.gstatic.com')
+          ) {
+            cacheToUse = FONT_CACHE;
+          }
+
+          caches.open(cacheToUse).then((cache) => {
+            cache.put(request, responseToCache);
           });
-      })
+
+          return networkResponse;
+        })
+        .catch(() => {
+          if (request.destination === 'document') {
+            return caches.match('/offline.html');
+          }
+          throw new Error('Network request failed');
+        });
+    }),
   );
 });
 
