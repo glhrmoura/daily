@@ -8,3 +8,16 @@ export type Task = {
   notes?: string;
   color?: string;
 };
+
+export type MissedItem = {
+  taskId: string;
+  name: string;
+  period: Period;
+  notes?: string;
+  color?: string;
+};
+
+export type DayMissedReport = {
+  date: string;
+  items: MissedItem[];
+};
