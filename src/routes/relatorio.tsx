@@ -8,12 +8,17 @@ export const Route = createFileRoute('/relatorio')({
 });
 
 function Relatorio() {
-  const { missed, hydrated } = useTasks();
+  const { missed, hydrated, removeMissedItem, removeMissedDay } = useTasks();
 
   return (
     <div className="min-h-dvh bg-background">
       <Header />
-      <ReportPage missed={missed} hydrated={hydrated} />
+      <ReportPage
+        missed={missed}
+        hydrated={hydrated}
+        onRemoveItem={removeMissedItem}
+        onRemoveDay={removeMissedDay}
+      />
     </div>
   );
 }
