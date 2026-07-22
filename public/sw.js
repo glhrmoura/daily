@@ -1,4 +1,4 @@
-const APP_VERSION = 3;
+const APP_VERSION = 4;
 const CACHE_NAME = `daily-app-v${APP_VERSION}-${Date.now()}`;
 const STATIC_CACHE = `daily-app-static-v${APP_VERSION}`;
 const DYNAMIC_CACHE = `daily-app-dynamic-v${APP_VERSION}`;
