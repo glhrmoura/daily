@@ -1,36 +1,45 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { Task } from '@/types/task';
+import type { DayMissedReport, Task } from '@/types/task';
 import { loadDailyStore, resetChecksIfNewDay, saveDailyStore } from '@/lib/storage';
 
 export function useTasks() {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [missed, setMissed] = useState<DayMissedReport[]>([]);
   const [lastReset, setLastReset] = useState('');
   const [hydrated, setHydrated] = useState(false);
   const tasksRef = useRef(tasks);
   const lastResetRef = useRef(lastReset);
+  const missedRef = useRef(missed);
 
   tasksRef.current = tasks;
   lastResetRef.current = lastReset;
+  missedRef.current = missed;
 
   useEffect(() => {
     const store = loadDailyStore();
     setTasks(store.tasks);
+    setMissed(store.missed);
     setLastReset(store.lastReset);
     setHydrated(true);
   }, []);
 
   useEffect(() => {
     if (!hydrated || !lastReset) return;
-    saveDailyStore({ tasks, lastReset });
-  }, [tasks, lastReset, hydrated]);
+    saveDailyStore({ tasks, lastReset, missed });
+  }, [tasks, lastReset, missed, hydrated]);
 
   useEffect(() => {
     if (!hydrated) return;
 
     const applyDailyReset = () => {
-      const next = resetChecksIfNewDay(tasksRef.current, lastResetRef.current);
+      const next = resetChecksIfNewDay(
+        tasksRef.current,
+        lastResetRef.current,
+        missedRef.current,
+      );
       if (!next) return;
       setTasks(next.tasks);
+      setMissed(next.missed);
       setLastReset(next.lastReset);
     };
 
@@ -67,5 +76,5 @@ export function useTasks() {
     );
   }, []);
 
-  return { tasks, hydrated, addTask, updateTask, deleteTask, toggleChecked };
+  return { tasks, missed, hydrated, addTask, updateTask, deleteTask, toggleChecked };
 }
