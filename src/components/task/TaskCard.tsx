@@ -1,4 +1,4 @@
-import { Check, Clock, Pencil, Trash2 } from 'lucide-react';
+import { Check, Pencil, Trash2 } from 'lucide-react';
 import type { KeyboardEvent } from 'react';
 import type { Task } from '@/types/task';
 import { cn } from '@/lib/utils';
@@ -64,20 +64,9 @@ export function TaskCard({ task, onToggle, onEdit, onDelete }: Props) {
         >
           {task.name}
         </div>
-        <div className="mt-0.5 flex items-center gap-2 text-xs text-muted-foreground">
-          {task.time && (
-            <span className="inline-flex items-center gap-1">
-              <Clock className="h-3 w-3" />
-              {task.time}
-            </span>
-          )}
-          {task.notes && (
-            <span className="truncate">
-              {task.time ? '· ' : ''}
-              {task.notes}
-            </span>
-          )}
-        </div>
+        {task.notes && (
+          <div className="mt-0.5 truncate text-xs text-muted-foreground">{task.notes}</div>
+        )}
       </div>
 
       <div className="flex shrink-0 items-center gap-0.5">

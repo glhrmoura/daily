@@ -11,10 +11,7 @@ export const Route = createFileRoute('/')({
   component: Index,
 });
 
-function sortByTime(a: Task, b: Task) {
-  if (a.time && b.time) return a.time.localeCompare(b.time);
-  if (a.time) return -1;
-  if (b.time) return 1;
+function sortByName(a: Task, b: Task) {
   return a.name.localeCompare(b.name);
 }
 
@@ -26,7 +23,7 @@ function Index() {
   const [toDelete, setToDelete] = useState<Task | null>(null);
 
   const grouped = useMemo(() => {
-    const sorted = [...tasks].sort(sortByTime);
+    const sorted = [...tasks].sort(sortByName);
     return {
       morning: sorted.filter((m) => m.period === 'morning'),
       afternoon: sorted.filter((m) => m.period === 'afternoon'),
@@ -58,7 +55,7 @@ function Index() {
   };
 
   return (
-    <div className={`min-h-screen bg-background ${total > 0 ? 'pb-44 sm:pb-28' : 'pb-28'}`}>
+    <div className={`min-h-screen bg-background ${total > 0 ? 'pb-52 sm:pb-28' : 'pb-28'}`}>
       <div className="mx-auto max-w-2xl px-4 pt-8 sm:pt-12">
         <header className="mb-6">
           <div className="mb-4 flex items-center gap-3">
@@ -82,7 +79,7 @@ function Index() {
         </header>
 
         {total > 0 && (
-          <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface/95 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 backdrop-blur-md sm:static sm:mb-10 sm:rounded-2xl sm:border sm:bg-surface sm:p-5 sm:backdrop-blur-none">
+          <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface/95 px-4 pb-[calc(env(safe-area-inset-bottom,0px)+1.25rem)] pt-4 backdrop-blur-md sm:static sm:mb-10 sm:rounded-2xl sm:border sm:bg-surface sm:p-5 sm:pb-5 sm:backdrop-blur-none">
             <div className="mx-auto max-w-2xl">
               <div className="flex items-baseline justify-between">
                 <div>
@@ -160,7 +157,9 @@ function Index() {
         onClick={openNew}
         aria-label="Adicionar tarefa"
         className={`fixed right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full border border-border-strong bg-primary text-primary-foreground transition-transform hover:scale-105 active:scale-95 ${
-          total > 0 ? 'bottom-36 sm:bottom-6' : 'bottom-6'
+          total > 0
+            ? 'bottom-[calc(9.5rem+env(safe-area-inset-bottom,0px))] sm:bottom-6'
+            : 'bottom-6'
         }`}
       >
         <Plus className="h-6 w-6" />

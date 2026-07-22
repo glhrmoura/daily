@@ -22,7 +22,6 @@ const COLORS = [
 export function TaskForm({ open, initial, onClose, onSave }: Props) {
   const [name, setName] = useState('');
   const [period, setPeriod] = useState<Period>('morning');
-  const [time, setTime] = useState('');
   const [notes, setNotes] = useState('');
   const [color, setColor] = useState('');
 
@@ -30,7 +29,6 @@ export function TaskForm({ open, initial, onClose, onSave }: Props) {
     if (open) {
       setName(initial?.name ?? '');
       setPeriod(initial?.period ?? 'morning');
-      setTime(initial?.time ?? '');
       setNotes(initial?.notes ?? '');
       setColor(initial?.color ?? '');
     }
@@ -45,7 +43,6 @@ export function TaskForm({ open, initial, onClose, onSave }: Props) {
       {
         name: name.trim(),
         period,
-        time: time || undefined,
         notes: notes.trim() || undefined,
         color: color || undefined,
       },
@@ -114,18 +111,6 @@ export function TaskForm({ open, initial, onClose, onSave }: Props) {
                 </button>
               ))}
             </div>
-          </div>
-
-          <div>
-            <label className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              Horário <span className="normal-case tracking-normal">(opcional)</span>
-            </label>
-            <input
-              type="time"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-              className="w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm outline-none transition focus:border-primary/60 focus:ring-2 focus:ring-ring"
-            />
           </div>
 
           <div>
