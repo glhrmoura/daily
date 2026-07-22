@@ -1,13 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
-import { CalendarDays, ListChecks, Moon, Plus, Sun, Sunrise } from "lucide-react";
-import { useTasks } from "@/hooks/useTasks";
-import type { Task } from "@/types/task";
-import { TaskForm } from "@/components/task/TaskForm";
-import { ConfirmDialog } from "@/components/task/ConfirmDialog";
-import { PeriodSection } from "@/components/task/PeriodSection";
+import { createFileRoute } from '@tanstack/react-router';
+import { useMemo, useState } from 'react';
+import { CalendarDays, ListChecks, Moon, Plus, Sun, Sunrise } from 'lucide-react';
+import { useTasks } from '@/hooks/useTasks';
+import type { Task } from '@/types/task';
+import { TaskForm } from '@/components/task/TaskForm';
+import { ConfirmDialog } from '@/components/task/ConfirmDialog';
+import { PeriodSection } from '@/components/task/PeriodSection';
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute('/')({
   component: Index,
 });
 
@@ -19,8 +19,7 @@ function sortByTime(a: Task, b: Task) {
 }
 
 function Index() {
-  const { tasks, hydrated, addTask, updateTask, deleteTask, toggleChecked } =
-    useTasks();
+  const { tasks, hydrated, addTask, updateTask, deleteTask, toggleChecked } = useTasks();
 
   const [formOpen, setFormOpen] = useState(false);
   const [editing, setEditing] = useState<Task | null>(null);
@@ -29,9 +28,9 @@ function Index() {
   const grouped = useMemo(() => {
     const sorted = [...tasks].sort(sortByTime);
     return {
-      morning: sorted.filter((m) => m.period === "morning"),
-      afternoon: sorted.filter((m) => m.period === "afternoon"),
-      night: sorted.filter((m) => m.period === "night"),
+      morning: sorted.filter((m) => m.period === 'morning'),
+      afternoon: sorted.filter((m) => m.period === 'afternoon'),
+      night: sorted.filter((m) => m.period === 'night'),
     };
   }, [tasks]);
 
@@ -39,10 +38,10 @@ function Index() {
   const done = tasks.filter((m) => m.checked).length;
   const progress = total === 0 ? 0 : Math.round((done / total) * 100);
 
-  const today = new Date().toLocaleDateString("pt-BR", {
-    weekday: "long",
-    day: "2-digit",
-    month: "long",
+  const today = new Date().toLocaleDateString('pt-BR', {
+    weekday: 'long',
+    day: '2-digit',
+    month: 'long',
   });
 
   const openNew = () => {
@@ -53,24 +52,18 @@ function Index() {
     setEditing(m);
     setFormOpen(true);
   };
-  const handleSave = (data: Omit<Task, "id" | "checked">, id?: string) => {
+  const handleSave = (data: Omit<Task, 'id' | 'checked'>, id?: string) => {
     if (id) updateTask(id, data);
     else addTask(data);
   };
 
   return (
-    <div
-      className={`min-h-screen bg-background ${total > 0 ? "pb-52 sm:pb-28" : "pb-28"}`}
-    >
-      <div className="mx-auto max-w-2xl px-4 pt-10 sm:pt-16">
-        <header className="mb-8">
-          <div className="mb-5 flex items-center gap-3">
+    <div className={`min-h-screen bg-background ${total > 0 ? 'pb-44 sm:pb-28' : 'pb-28'}`}>
+      <div className="mx-auto max-w-2xl px-4 pt-8 sm:pt-12">
+        <header className="mb-6">
+          <div className="mb-4 flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg">
-              <img
-                src="/logo.png"
-                alt="Daily"
-                className="h-full w-full object-cover"
-              />
+              <img src="/logo.png" alt="Daily" className="h-full w-full object-cover" />
             </div>
             <div>
               <h1 className="text-xl font-bold text-foreground">Daily</h1>
@@ -81,12 +74,10 @@ function Index() {
             <CalendarDays className="h-3.5 w-3.5" />
             <span className="capitalize">{today}</span>
           </div>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
-            Rotina de hoje
-          </h2>
-          <p className="mt-1.5 text-sm text-muted-foreground">
-            As tarefas cadastradas permanecem nos próximos dias e são
-            desmarcadas automaticamente para serem feitas de novo.
+          <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Rotina de hoje</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            As tarefas cadastradas permanecem nos próximos dias e são desmarcadas automaticamente
+            para serem feitas de novo.
           </p>
         </header>
 
@@ -96,8 +87,7 @@ function Index() {
               <div className="flex items-baseline justify-between">
                 <div>
                   <div className="text-2xl font-semibold tracking-tight">
-                    {done}{" "}
-                    <span className="text-muted-foreground">de {total}</span>
+                    {done} <span className="text-muted-foreground">de {total}</span>
                   </div>
                   <div className="mt-0.5 text-xs uppercase tracking-wider text-muted-foreground">
                     concluídas hoje
@@ -134,7 +124,7 @@ function Index() {
             </button>
           </div>
         ) : (
-          <div className="space-y-9 pb-4 sm:pb-0">
+          <div className="space-y-7 pb-4 sm:pb-0">
             <PeriodSection
               title="Manhã"
               icon={<Sunrise className="h-4 w-4 text-morning" />}
@@ -170,7 +160,7 @@ function Index() {
         onClick={openNew}
         aria-label="Adicionar tarefa"
         className={`fixed right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full border border-border-strong bg-primary text-primary-foreground transition-transform hover:scale-105 active:scale-95 ${
-          total > 0 ? "bottom-36 sm:bottom-6" : "bottom-6"
+          total > 0 ? 'bottom-36 sm:bottom-6' : 'bottom-6'
         }`}
       >
         <Plus className="h-6 w-6" />
@@ -186,9 +176,7 @@ function Index() {
       <ConfirmDialog
         open={!!toDelete}
         title="Excluir tarefa?"
-        description={
-          toDelete ? `"${toDelete.name}" será removida permanentemente.` : undefined
-        }
+        description={toDelete ? `"${toDelete.name}" será removida permanentemente.` : undefined}
         confirmLabel="Excluir"
         onCancel={() => setToDelete(null)}
         onConfirm={() => {
