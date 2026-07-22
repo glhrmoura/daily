@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
+import { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { X } from 'lucide-react';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
-  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 }
 
 export function InstallBanner() {
-  const [deferredPrompt, setDeferredPrompt] =
-    useState<BeforeInstallPromptEvent | null>(null);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
 
   useEffect(() => {
@@ -24,15 +23,12 @@ export function InstallBanner() {
       setDeferredPrompt(null);
     };
 
-    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-    window.addEventListener("appinstalled", handleAppInstalled);
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('appinstalled', handleAppInstalled);
 
     return () => {
-      window.removeEventListener(
-        "beforeinstallprompt",
-        handleBeforeInstallPrompt,
-      );
-      window.removeEventListener("appinstalled", handleAppInstalled);
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
     };
   }, []);
 
@@ -42,7 +38,7 @@ export function InstallBanner() {
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
 
-    if (outcome === "accepted") {
+    if (outcome === 'accepted') {
       setShowInstallPrompt(false);
       setDeferredPrompt(null);
     }
@@ -59,11 +55,7 @@ export function InstallBanner() {
       <div className="flex items-center justify-between">
         <div className="flex flex-1 items-center gap-3">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg">
-            <img
-              src="/logo.png"
-              alt="Daily"
-              className="h-full w-full object-cover"
-            />
+            <img src="/logo.png" alt="Daily" className="h-full w-full object-cover" />
           </div>
           <div className="flex-1">
             <h3 className="font-semibold text-foreground">Instalar Daily</h3>
@@ -76,12 +68,7 @@ export function InstallBanner() {
           <Button onClick={handleInstallClick} size="sm">
             Instalar
           </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleDismiss}
-            className="h-8 w-8 p-0"
-          >
+          <Button variant="ghost" size="sm" onClick={handleDismiss} className="h-8 w-8 p-0">
             <X className="h-4 w-4" />
           </Button>
         </div>
