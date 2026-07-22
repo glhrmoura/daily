@@ -58,7 +58,7 @@ function Index() {
   return (
     <div className={`min-h-dvh bg-background ${total > 0 ? 'pb-52 sm:pb-28' : 'pb-28'}`}>
       <Header />
-      <div className="container mx-auto max-w-2xl space-y-6 p-4 pt-24">
+      <div className="container mx-auto max-w-2xl space-y-6 p-4 pt-[calc(5.5rem+env(safe-area-inset-top,0px))]">
         <header>
           <div className="flex items-center gap-2 text-xs font-medium tracking-wide text-muted-foreground">
             <CalendarDays className="h-3.5 w-3.5" />
