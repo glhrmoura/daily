@@ -1,8 +1,5 @@
-const APP_VERSION = 34;
-const CACHE_NAME = `daily-app-v${APP_VERSION}-${Date.now()}`;
-const STATIC_CACHE = `daily-app-static-v${APP_VERSION}`;
-const DYNAMIC_CACHE = `daily-app-dynamic-v${APP_VERSION}`;
-const FONT_CACHE = `daily-app-fonts-v${APP_VERSION}`;
+const APP_VERSION = 2;
+const CACHE_NAME = `dailyapp-v${APP_VERSION}`;
 
 const urlsToCache = [
   '/',
@@ -15,7 +12,7 @@ const urlsToCache = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
-      .open(STATIC_CACHE)
+      .open(CACHE_NAME)
       .then((cache) => {
         return cache.addAll(urlsToCache);
       })
@@ -32,11 +29,7 @@ self.addEventListener('activate', (event) => {
       .then((cacheNames) => {
         return Promise.all(
           cacheNames.map((cacheName) => {
-            if (
-              cacheName !== STATIC_CACHE &&
-              cacheName !== DYNAMIC_CACHE &&
-              cacheName !== FONT_CACHE
-            ) {
+            if (cacheName !== CACHE_NAME) {
               return caches.delete(cacheName);
             }
           }),
@@ -72,7 +65,7 @@ self.addEventListener('fetch', (event) => {
             .then((networkResponse) => {
               if (networkResponse.ok) {
                 const responseClone = networkResponse.clone();
-                caches.open(DYNAMIC_CACHE).then((cache) => {
+                caches.open(CACHE_NAME).then((cache) => {
                   cache.put(request, responseClone);
                 });
               }
@@ -87,24 +80,13 @@ self.addEventListener('fetch', (event) => {
           if (
             !networkResponse ||
             networkResponse.status !== 200 ||
-            networkResponse.type !== 'basic'
+            (networkResponse.type !== 'basic' && networkResponse.type !== 'cors')
           ) {
             return networkResponse;
           }
 
           const responseToCache = networkResponse.clone();
-          let cacheToUse = DYNAMIC_CACHE;
-
-          if (urlsToCache.includes(url.pathname) || urlsToCache.includes(request.url)) {
-            cacheToUse = STATIC_CACHE;
-          } else if (
-            url.hostname.includes('fonts.googleapis.com') ||
-            url.hostname.includes('fonts.gstatic.com')
-          ) {
-            cacheToUse = FONT_CACHE;
-          }
-
-          caches.open(cacheToUse).then((cache) => {
+          caches.open(CACHE_NAME).then((cache) => {
             cache.put(request, responseToCache);
           });
 
