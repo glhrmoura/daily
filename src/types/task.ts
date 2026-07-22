@@ -1,4 +1,4 @@
-export type Period = "morning" | "afternoon" | "night";
+export type Period = 'morning' | 'afternoon' | 'night';
 
 export type Task = {
   id: string;
