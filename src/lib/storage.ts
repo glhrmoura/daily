@@ -1,8 +1,8 @@
-import type { Task } from "@/types/task";
+import type { Task } from '@/types/task';
 
-const STORAGE_KEY = "daily_v1";
-const LEGACY_TASKS_KEY = "tasks_v1";
-const LEGACY_RESET_KEY = "tasks_last_reset";
+const STORAGE_KEY = 'daily_v1';
+const LEGACY_TASKS_KEY = 'tasks_v1';
+const LEGACY_RESET_KEY = 'tasks_last_reset';
 
 export type DailyStore = {
   tasks: Task[];
@@ -35,7 +35,7 @@ function readLegacyStore(): DailyStore | null {
     if (!raw) return null;
 
     const tasks = JSON.parse(raw) as Task[];
-    const lastReset = localStorage.getItem(LEGACY_RESET_KEY) ?? "";
+    const lastReset = localStorage.getItem(LEGACY_RESET_KEY) ?? '';
     const store = withDailyReset(Array.isArray(tasks) ? tasks : [], lastReset);
 
     saveDailyStore(store);
@@ -57,8 +57,7 @@ export function loadDailyStore(): DailyStore {
 
     const parsed = JSON.parse(raw) as Partial<DailyStore>;
     const tasks = Array.isArray(parsed.tasks) ? parsed.tasks : [];
-    const lastReset =
-      typeof parsed.lastReset === "string" ? parsed.lastReset : "";
+    const lastReset = typeof parsed.lastReset === 'string' ? parsed.lastReset : '';
     const store = withDailyReset(tasks, lastReset);
     saveDailyStore(store);
     return store;
