@@ -5,9 +5,11 @@ import { MissedDaySection } from './components/MissedDaySection';
 type Props = {
   missed: DayMissedReport[];
   hydrated: boolean;
+  onRemoveItem: (date: string, index: number) => void;
+  onRemoveDay: (date: string) => void;
 };
 
-export function ReportPage({ missed, hydrated }: Props) {
+export function ReportPage({ missed, hydrated, onRemoveItem, onRemoveDay }: Props) {
   return (
     <div className="container mx-auto max-w-2xl space-y-6 p-4 pt-[calc(5.5rem+env(safe-area-inset-top,0px))] pb-24">
       <header>
@@ -30,7 +32,13 @@ export function ReportPage({ missed, hydrated }: Props) {
       ) : (
         <div className="space-y-3">
           {missed.map((report, index) => (
-            <MissedDaySection key={report.date} report={report} defaultOpen={index === 0} />
+            <MissedDaySection
+              key={report.date}
+              report={report}
+              defaultOpen={index === 0}
+              onRemoveItem={onRemoveItem}
+              onRemoveDay={onRemoveDay}
+            />
           ))}
         </div>
       )}
