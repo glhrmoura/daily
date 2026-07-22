@@ -1,4 +1,0 @@
-#!/usr/bin/env sh
-
-node scripts/up-version.js || exit $?
-exit 1
