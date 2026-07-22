@@ -56,10 +56,10 @@ function Index() {
   };
 
   return (
-    <div className={`min-h-screen bg-background ${total > 0 ? 'pb-52 sm:pb-28' : 'pb-28'}`}>
+    <div className={`min-h-dvh bg-background ${total > 0 ? 'pb-52 sm:pb-28' : 'pb-28'}`}>
       <Header />
-      <div className="mx-auto max-w-2xl px-4 pt-24">
-        <header className="mb-6">
+      <div className="container mx-auto max-w-2xl space-y-6 p-4 pt-24">
+        <header>
           <div className="flex items-center gap-2 text-xs font-medium tracking-wide text-muted-foreground">
             <CalendarDays className="h-3.5 w-3.5" />
             <span className="capitalize">{today}</span>
@@ -70,32 +70,6 @@ function Index() {
             para serem feitas de novo.
           </p>
         </header>
-
-        {total > 0 && (
-          <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface/95 px-4 pb-[calc(env(safe-area-inset-bottom,0px)+1.25rem)] pt-4 backdrop-blur-md sm:static sm:mb-10 sm:rounded-2xl sm:border sm:bg-surface sm:p-5 sm:pb-5 sm:backdrop-blur-none">
-            <div className="mx-auto max-w-2xl">
-              <div className="flex items-baseline justify-between">
-                <div>
-                  <div className="text-2xl font-semibold tracking-tight">
-                    {done} <span className="text-muted-foreground">de {total}</span>
-                  </div>
-                  <div className="mt-0.5 text-xs uppercase tracking-wider text-muted-foreground">
-                    concluídas hoje
-                  </div>
-                </div>
-                <div className="text-2xl font-semibold tracking-tight text-primary">
-                  {progress}%
-                </div>
-              </div>
-              <div className="mt-4 h-3 overflow-hidden rounded-full border border-border bg-background">
-                <div
-                  className="h-full rounded-full bg-primary transition-all duration-500 ease-out"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
-            </div>
-          </div>
-        )}
 
         {hydrated && total === 0 ? (
           <div className="rounded-2xl border border-dashed border-border-strong bg-surface/40 p-10 text-center">
@@ -142,9 +116,56 @@ function Index() {
               onEdit={openEdit}
               onDelete={setToDelete}
             />
+            {total > 0 && (
+              <div className="mb-10 hidden rounded-2xl border border-border bg-surface p-5 sm:block">
+                <div className="flex items-baseline justify-between">
+                  <div>
+                    <div className="text-2xl font-semibold tracking-tight">
+                      {done} <span className="text-muted-foreground">de {total}</span>
+                    </div>
+                    <div className="mt-0.5 text-xs uppercase tracking-wider text-muted-foreground">
+                      concluídas hoje
+                    </div>
+                  </div>
+                  <div className="text-2xl font-semibold tracking-tight text-primary">
+                    {progress}%
+                  </div>
+                </div>
+                <div className="mt-4 h-3 overflow-hidden rounded-full border border-border bg-background">
+                  <div
+                    className="h-full rounded-full bg-primary transition-all duration-500 ease-out"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
+
+      {total > 0 && (
+        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface/95 px-4 pb-[calc(env(safe-area-inset-bottom,0px)+1.25rem)] pt-4 backdrop-blur-md sm:hidden">
+          <div className="mx-auto max-w-2xl">
+            <div className="flex items-baseline justify-between">
+              <div>
+                <div className="text-2xl font-semibold tracking-tight">
+                  {done} <span className="text-muted-foreground">de {total}</span>
+                </div>
+                <div className="mt-0.5 text-xs uppercase tracking-wider text-muted-foreground">
+                  concluídas hoje
+                </div>
+              </div>
+              <div className="text-2xl font-semibold tracking-tight text-primary">{progress}%</div>
+            </div>
+            <div className="mt-4 h-3 overflow-hidden rounded-full border border-border bg-background">
+              <div
+                className="h-full rounded-full bg-primary transition-all duration-500 ease-out"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       <button
         onClick={openNew}
@@ -152,7 +173,7 @@ function Index() {
         className={`fixed right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full border border-border-strong bg-primary text-primary-foreground transition-transform hover:scale-105 active:scale-95 ${
           total > 0
             ? 'bottom-[calc(9.5rem+env(safe-area-inset-bottom,0px))] sm:bottom-6'
-            : 'bottom-6'
+            : 'bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] sm:bottom-6'
         }`}
       >
         <Plus className="h-6 w-6" />

@@ -10,7 +10,7 @@ try {
   const versionMatch = content.match(/const APP_VERSION = (\d+);/);
 
   if (!versionMatch) {
-    console.error('Could not find APP_VERSION in sw.js');
+    console.error('❌ Could not find APP_VERSION in sw.js');
     process.exit(1);
   }
 
@@ -19,22 +19,19 @@ try {
 
   const updatedContent = content.replace(
     /const APP_VERSION = \d+;/,
-    `const APP_VERSION = ${newVersion};`,
+    `const APP_VERSION = ${newVersion};`
   );
 
   fs.writeFileSync(swPath, updatedContent, 'utf8');
 
-  console.log(`Version updated from ${currentVersion} to ${newVersion}`);
-  console.log('Committing version update...');
+  console.log(`✅ Version updated from ${currentVersion} to ${newVersion}`);
+  console.log('📝 Committing version update...');
 
-  execSync(`git add ${swPath}`, { stdio: 'inherit' });
-  execSync(`git commit -m"chore: bump service worker version to ${newVersion}"`, {
-    stdio: 'inherit',
-  });
-  execSync('git push --no-verify', { stdio: 'inherit' });
+  execSync(`git add ${swPath}`);
+  execSync(`git commit -m"chore: bump service worker version to ${newVersion}"`);
 
-  console.log('Push completed with service worker version bump included.');
+  console.log('🚀 Ready for push!');
 } catch (error) {
-  console.error('Error updating version:', error.message);
+  console.error('❌ Error updating version:', error.message);
   process.exit(1);
 }
