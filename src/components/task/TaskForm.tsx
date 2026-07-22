@@ -1,38 +1,38 @@
-import { useEffect, useState } from "react";
-import { X } from "lucide-react";
-import type { Task, Period } from "@/types/task";
+import { useEffect, useState } from 'react';
+import { X } from 'lucide-react';
+import type { Task, Period } from '@/types/task';
 
 type Props = {
   open: boolean;
   initial?: Task | null;
   onClose: () => void;
-  onSave: (data: Omit<Task, "id" | "checked">, id?: string) => void;
+  onSave: (data: Omit<Task, 'id' | 'checked'>, id?: string) => void;
 };
 
 const COLORS = [
-  { v: "", label: "Padrão" },
-  { v: "#9a4fec", label: "Roxo" },
-  { v: "#a874ed", label: "Lilás" },
-  { v: "#90b070", label: "Verde" },
-  { v: "#d06070", label: "Coral" },
-  { v: "#6060d0", label: "Azul" },
-  { v: "#f0c040", label: "Amarelo" },
+  { v: '', label: 'Padrão' },
+  { v: '#9a4fec', label: 'Roxo' },
+  { v: '#a874ed', label: 'Lilás' },
+  { v: '#90b070', label: 'Verde' },
+  { v: '#d06070', label: 'Coral' },
+  { v: '#6060d0', label: 'Azul' },
+  { v: '#f0c040', label: 'Amarelo' },
 ];
 
 export function TaskForm({ open, initial, onClose, onSave }: Props) {
-  const [name, setName] = useState("");
-  const [period, setPeriod] = useState<Period>("morning");
-  const [time, setTime] = useState("");
-  const [notes, setNotes] = useState("");
-  const [color, setColor] = useState("");
+  const [name, setName] = useState('');
+  const [period, setPeriod] = useState<Period>('morning');
+  const [time, setTime] = useState('');
+  const [notes, setNotes] = useState('');
+  const [color, setColor] = useState('');
 
   useEffect(() => {
     if (open) {
-      setName(initial?.name ?? "");
-      setPeriod(initial?.period ?? "morning");
-      setTime(initial?.time ?? "");
-      setNotes(initial?.notes ?? "");
-      setColor(initial?.color ?? "");
+      setName(initial?.name ?? '');
+      setPeriod(initial?.period ?? 'morning');
+      setTime(initial?.time ?? '');
+      setNotes(initial?.notes ?? '');
+      setColor(initial?.color ?? '');
     }
   }, [open, initial]);
 
@@ -62,7 +62,7 @@ export function TaskForm({ open, initial, onClose, onSave }: Props) {
       >
         <div className="mb-5 flex items-center justify-between">
           <h2 className="text-lg font-semibold tracking-tight">
-            {initial ? "Editar tarefa" : "Nova tarefa"}
+            {initial ? 'Editar tarefa' : 'Nova tarefa'}
           </h2>
           <button
             type="button"
@@ -95,9 +95,9 @@ export function TaskForm({ open, initial, onClose, onSave }: Props) {
             <div className="grid grid-cols-3 gap-2">
               {(
                 [
-                  { v: "morning", label: "Manhã" },
-                  { v: "afternoon", label: "Tarde" },
-                  { v: "night", label: "Noite" },
+                  { v: 'morning', label: 'Manhã' },
+                  { v: 'afternoon', label: 'Tarde' },
+                  { v: 'night', label: 'Noite' },
                 ] as const
               ).map((p) => (
                 <button
@@ -106,8 +106,8 @@ export function TaskForm({ open, initial, onClose, onSave }: Props) {
                   onClick={() => setPeriod(p.v)}
                   className={`rounded-xl border px-2 py-2.5 text-sm font-medium transition ${
                     period === p.v
-                      ? "border-primary/60 bg-primary/10 text-foreground"
-                      : "border-border bg-background text-muted-foreground hover:border-border-strong hover:text-foreground"
+                      ? 'border-primary/60 bg-primary/10 text-foreground'
+                      : 'border-border bg-background text-muted-foreground hover:border-border-strong hover:text-foreground'
                   }`}
                 >
                   {p.label}
@@ -135,20 +135,18 @@ export function TaskForm({ open, initial, onClose, onSave }: Props) {
             <div className="flex flex-wrap gap-2">
               {COLORS.map((c) => (
                 <button
-                  key={c.v || "none"}
+                  key={c.v || 'none'}
                   type="button"
                   onClick={() => setColor(c.v)}
                   aria-label={c.label}
                   className={`h-8 w-8 rounded-full border-2 transition ${
                     color === c.v
-                      ? "border-foreground scale-110"
-                      : "border-border hover:border-border-strong"
+                      ? 'border-foreground scale-110'
+                      : 'border-border hover:border-border-strong'
                   }`}
                   style={c.v ? { backgroundColor: c.v } : undefined}
                 >
-                  {!c.v && (
-                    <span className="text-xs text-muted-foreground">—</span>
-                  )}
+                  {!c.v && <span className="text-xs text-muted-foreground">—</span>}
                 </button>
               ))}
             </div>
