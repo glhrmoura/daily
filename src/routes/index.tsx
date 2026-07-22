@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { CalendarDays, ListChecks, Moon, Plus, Sun, Sunrise } from 'lucide-react';
 import { useTasks } from '@/hooks/useTasks';
 import type { Task } from '@/types/task';
+import { Header } from '@/components/Header';
 import { TaskForm } from '@/components/task/TaskForm';
 import { ConfirmDialog } from '@/components/task/ConfirmDialog';
 import { PeriodSection } from '@/components/task/PeriodSection';
@@ -56,17 +57,9 @@ function Index() {
 
   return (
     <div className={`min-h-screen bg-background ${total > 0 ? 'pb-52 sm:pb-28' : 'pb-28'}`}>
-      <div className="mx-auto max-w-2xl px-4 pt-8 sm:pt-12">
+      <Header />
+      <div className="mx-auto max-w-2xl px-4 pt-24">
         <header className="mb-6">
-          <div className="mb-4 flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg">
-              <img src="/logo.png" alt="Daily" className="h-full w-full object-cover" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-foreground">Daily</h1>
-              <p className="text-xs text-muted-foreground">Checklist diário</p>
-            </div>
-          </div>
           <div className="flex items-center gap-2 text-xs font-medium tracking-wide text-muted-foreground">
             <CalendarDays className="h-3.5 w-3.5" />
             <span className="capitalize">{today}</span>

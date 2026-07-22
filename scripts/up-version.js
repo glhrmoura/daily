@@ -27,10 +27,13 @@ try {
   console.log(`Version updated from ${currentVersion} to ${newVersion}`);
   console.log('Committing version update...');
 
-  execSync(`git add ${swPath}`);
-  execSync(`git commit -m"chore: bump service worker version to ${newVersion}"`);
+  execSync(`git add ${swPath}`, { stdio: 'inherit' });
+  execSync(`git commit -m"chore: bump service worker version to ${newVersion}"`, {
+    stdio: 'inherit',
+  });
+  execSync('git push --no-verify', { stdio: 'inherit' });
 
-  console.log('Ready for push!');
+  console.log('Push completed with service worker version bump included.');
 } catch (error) {
   console.error('Error updating version:', error.message);
   process.exit(1);

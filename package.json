@@ -9,7 +9,6 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "push": "node scripts/push.js",
     "prepare": "husky"
   },
   "dependencies": {
