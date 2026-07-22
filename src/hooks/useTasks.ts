@@ -76,5 +76,33 @@ export function useTasks() {
     );
   }, []);
 
-  return { tasks, missed, hydrated, addTask, updateTask, deleteTask, toggleChecked };
+  const removeMissedItem = useCallback((date: string, index: number) => {
+    setMissed((prev) =>
+      prev
+        .map((report) => {
+          if (report.date !== date) return report;
+          return {
+            ...report,
+            items: report.items.filter((_, itemIndex) => itemIndex !== index),
+          };
+        })
+        .filter((report) => report.items.length > 0),
+    );
+  }, []);
+
+  const removeMissedDay = useCallback((date: string) => {
+    setMissed((prev) => prev.filter((report) => report.date !== date));
+  }, []);
+
+  return {
+    tasks,
+    missed,
+    hydrated,
+    addTask,
+    updateTask,
+    deleteTask,
+    toggleChecked,
+    removeMissedItem,
+    removeMissedDay,
+  };
 }
