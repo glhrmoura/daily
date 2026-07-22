@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-import type { Task } from "@/types/task";
-import { TaskCard } from "./TaskCard";
+import type { ReactNode } from 'react';
+import type { Task } from '@/types/task';
+import { TaskCard } from './TaskCard';
 
 type Props = {
   title: string;
@@ -12,15 +12,7 @@ type Props = {
   onDelete: (m: Task) => void;
 };
 
-export function PeriodSection({
-  title,
-  icon,
-  accent,
-  tasks,
-  onToggle,
-  onEdit,
-  onDelete,
-}: Props) {
+export function PeriodSection({ title, icon, accent, tasks, onToggle, onEdit, onDelete }: Props) {
   if (tasks.length === 0) return null;
   const done = tasks.filter((m) => m.checked).length;
   return (
@@ -42,13 +34,7 @@ export function PeriodSection({
       </div>
       <div className="space-y-2.5">
         {tasks.map((m) => (
-          <TaskCard
-            key={m.id}
-            task={m}
-            onToggle={onToggle}
-            onEdit={onEdit}
-            onDelete={onDelete}
-          />
+          <TaskCard key={m.id} task={m} onToggle={onToggle} onEdit={onEdit} onDelete={onDelete} />
         ))}
       </div>
     </section>
