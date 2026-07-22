@@ -1,11 +1,6 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {
-  Outlet,
-  Link,
-  createRootRouteWithContext,
-  useRouter,
-} from "@tanstack/react-router";
-import { InstallBanner } from "@/components/InstallBanner";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Outlet, Link, createRootRouteWithContext, useRouter } from '@tanstack/react-router';
+import { InstallBanner } from '@/components/InstallBanner';
 
 function NotFoundComponent() {
   return (
