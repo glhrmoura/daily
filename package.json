@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "pre-push": "node scripts/up-version.js",
+    "push": "node scripts/push.js",
     "prepare": "husky"
   },
   "dependencies": {
