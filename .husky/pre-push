@@ -1,1 +1,21 @@
-yarn pre-push
+#!/usr/bin/env sh
+
+yarn pre-push || exit $?
+
+remote="${1:-origin}"
+branch="$(git rev-parse --abbrev-ref HEAD)"
+
+if [ "$branch" = "HEAD" ]; then
+  echo "Detached HEAD: cannot push version bump automatically."
+  exit 1
+fi
+
+git push --no-verify "$remote" "HEAD:refs/heads/$branch"
+status=$?
+
+if [ $status -ne 0 ]; then
+  exit $status
+fi
+
+echo "Push completed with service worker version bump included."
+exit 1
