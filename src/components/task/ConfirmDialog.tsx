@@ -11,7 +11,7 @@ export function ConfirmDialog({
   open,
   title,
   description,
-  confirmLabel = "Confirmar",
+  confirmLabel = 'Confirmar',
   onCancel,
   onConfirm,
 }: Props) {
@@ -20,9 +20,7 @@ export function ConfirmDialog({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/70 p-4 backdrop-blur-md animate-in fade-in duration-200">
       <div className="w-full max-w-sm rounded-2xl border border-border bg-surface p-6 animate-in zoom-in-95 duration-200">
         <h3 className="text-base font-semibold">{title}</h3>
-        {description && (
-          <p className="mt-1.5 text-sm text-muted-foreground">{description}</p>
-        )}
+        {description && <p className="mt-1.5 text-sm text-muted-foreground">{description}</p>}
         <div className="mt-5 flex gap-2">
           <button
             onClick={onCancel}
