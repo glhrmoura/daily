@@ -1,11 +1,11 @@
-@import "tailwindcss" source(none);
+@import 'tailwindcss' source(none);
 @source "../src";
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "Lexend", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Lexend', ui-sans-serif, system-ui, sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -80,6 +80,8 @@
 
   html {
     font-family: var(--font-sans);
+    height: 100%;
+    overflow: hidden;
   }
 
   html,
@@ -87,6 +89,19 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+  }
+
+  body {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  #root {
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
   }
 
   button,
@@ -97,18 +112,18 @@
   }
 
   button,
-  [role="button"],
+  [role='button'],
   a,
   label,
-  input[type="checkbox"],
-  input[type="radio"],
+  input[type='checkbox'],
+  input[type='radio'],
   select,
   summary {
     cursor: pointer;
   }
 
   button:disabled,
-  [role="button"][aria-disabled="true"] {
+  [role='button'][aria-disabled='true'] {
     cursor: not-allowed;
   }
 }
