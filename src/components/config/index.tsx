@@ -9,7 +9,7 @@ export function ConfigPage({ primary, onPrimaryChange }: Props) {
   return (
     <div className="container mx-auto max-w-2xl space-y-6 p-4 pt-[calc(5.5rem+env(safe-area-inset-top,0px))] pb-24">
       <header>
-        <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Configurações</h2>
+        <h2 className="text-xl font-semibold tracking-tight">Configurações</h2>
         <p className="mt-1 text-sm text-muted-foreground">
           Personalize a aparência do Daily.
         </p>
@@ -39,16 +39,23 @@ export function ConfigPage({ primary, onPrimaryChange }: Props) {
             />
           ))}
         </div>
-        <div className="mt-5 flex items-center gap-3">
-          <div className="h-10 flex-1 overflow-hidden rounded-full border border-border bg-background">
-            <div className="h-full w-2/3 rounded-full bg-primary" />
+
+        <div className="mt-6 border-t border-border pt-5">
+          <h3 className="text-sm font-semibold">Exemplo</h3>
+          <p className="mt-0.5 text-xs text-muted-foreground">
+            Prévia de como a cor aparece no app.
+          </p>
+          <div className="mt-4 flex items-center gap-3">
+            <div className="h-10 flex-1 overflow-hidden rounded-full border border-border bg-background">
+              <div className="h-full w-2/3 rounded-full bg-primary" />
+            </div>
+            <button
+              type="button"
+              className="rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground"
+            >
+              Exemplo
+            </button>
           </div>
-          <button
-            type="button"
-            className="rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground"
-          >
-            Exemplo
-          </button>
         </div>
       </section>
     </div>
