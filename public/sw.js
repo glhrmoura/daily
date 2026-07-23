@@ -1,4 +1,4 @@
-const APP_VERSION = 8;
+const APP_VERSION = 9;
 const CACHE_NAME = `dailyapp-v${APP_VERSION}`;
 
 const PRECACHE_URLS = [
