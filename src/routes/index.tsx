@@ -61,12 +61,16 @@ function Index() {
     <div
       className={`min-h-dvh bg-background ${
         total > 0
-          ? 'pb-[calc(var(--home-progress-height)+var(--home-fab-size)+(var(--home-fab-gap)*2)+env(safe-area-inset-bottom,0px)-20px)] sm:pb-24'
-          : 'pb-24 sm:pb-10'
+          ? 'pb-[calc(var(--home-progress-height)+var(--home-fab-size)+(var(--home-fab-gap)*2)+env(safe-area-inset-bottom,0px))]'
+          : 'pb-24'
       }`}
     >
       <Header />
-      <div className="container mx-auto flex max-w-2xl flex-col gap-6 px-4 pb-4 pt-[calc(5.5rem+env(safe-area-inset-top,0px))]">
+      <div
+        className={`container mx-auto flex max-w-2xl flex-col gap-6 px-4 pt-[calc(5.5rem+env(safe-area-inset-top,0px))] ${
+          total > 0 ? 'pb-0' : 'pb-4'
+        }`}
+      >
         <header>
           <div className="flex items-center gap-2 text-xs font-medium tracking-wide text-muted-foreground">
             <CalendarDays className="h-3.5 w-3.5" />
@@ -119,86 +123,51 @@ function Index() {
               onEdit={openEdit}
               onDelete={setToDelete}
             />
-            {total > 0 && (
-              <div className="hidden rounded-2xl border border-border bg-surface p-5 sm:block">
-                <div className="flex items-baseline justify-between">
-                  <div>
-                    <div className="text-2xl font-semibold tracking-tight">
-                      {done}{' '}
-                      <span className="text-muted-foreground">
-                        {t('home.of')} {total}
-                      </span>
-                    </div>
-                    <div className="mt-0.5 text-xs uppercase tracking-wider text-muted-foreground">
-                      {t('home.completedToday')}
-                    </div>
-                  </div>
-                  <div className="text-2xl font-semibold tracking-tight text-primary">
-                    {progress}%
-                  </div>
-                </div>
-                <div className="mt-4 h-3 overflow-hidden rounded-full border border-border bg-background">
-                  <div
-                    className="h-full rounded-full bg-primary transition-all duration-500 ease-out"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-              </div>
-            )}
           </div>
         )}
       </div>
 
       {total > 0 ? (
-        <>
-          <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 flex flex-col items-end gap-(--home-fab-gap) sm:hidden">
-            <button
-              onClick={openNew}
-              aria-label={t('home.addTask')}
-              className="pointer-events-auto mr-6 flex h-14 w-14 items-center justify-center rounded-full border border-border-strong bg-primary text-primary-foreground transition-transform hover:scale-105 active:scale-95"
-            >
-              <Plus className="h-6 w-6" />
-            </button>
-            <div className="pointer-events-auto w-full border-t border-border bg-surface/95 px-4 pt-4 pb-[calc(env(safe-area-inset-bottom,0px)+1.25rem)] backdrop-blur-md">
-              <div className="mx-auto max-w-2xl">
-                <div className="flex items-baseline justify-between">
-                  <div>
-                    <div className="text-2xl font-semibold tracking-tight">
-                      {done}{' '}
-                      <span className="text-muted-foreground">
-                        {t('home.of')} {total}
-                      </span>
-                    </div>
-                    <div className="mt-0.5 text-xs uppercase tracking-wider text-muted-foreground">
-                      {t('home.completedToday')}
-                    </div>
-                  </div>
-                  <div className="text-2xl font-semibold tracking-tight text-primary">
-                    {progress}%
-                  </div>
-                </div>
-                <div className="mt-4 h-3 overflow-hidden rounded-full border border-border bg-background">
-                  <div
-                    className="h-full rounded-full bg-primary transition-all duration-500 ease-out"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 flex flex-col items-end gap-(--home-fab-gap)">
           <button
             onClick={openNew}
             aria-label={t('home.addTask')}
-            className="fixed right-6 bottom-6 z-50 hidden h-14 w-14 items-center justify-center rounded-full border border-border-strong bg-primary text-primary-foreground transition-transform hover:scale-105 active:scale-95 sm:flex"
+            className="pointer-events-auto mr-6 flex h-14 w-14 items-center justify-center rounded-full border border-border-strong bg-primary text-primary-foreground transition-transform hover:scale-105 active:scale-95"
           >
             <Plus className="h-6 w-6" />
           </button>
-        </>
+          <div className="pointer-events-auto w-full border-t border-border bg-surface/95 px-4 pt-4 pb-[calc(env(safe-area-inset-bottom,0px)+1.25rem)] backdrop-blur-md">
+            <div className="mx-auto max-w-2xl">
+              <div className="flex items-baseline justify-between">
+                <div>
+                  <div className="text-2xl font-semibold tracking-tight">
+                    {done}{' '}
+                    <span className="text-muted-foreground">
+                      {t('home.of')} {total}
+                    </span>
+                  </div>
+                  <div className="mt-0.5 text-xs uppercase tracking-wider text-muted-foreground">
+                    {t('home.completedToday')}
+                  </div>
+                </div>
+                <div className="text-2xl font-semibold tracking-tight text-primary">
+                  {progress}%
+                </div>
+              </div>
+              <div className="mt-4 h-3 overflow-hidden rounded-full border border-border bg-background">
+                <div
+                  className="h-full rounded-full bg-primary transition-all duration-500 ease-out"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       ) : (
         <button
           onClick={openNew}
           aria-label={t('home.addTask')}
-          className="fixed right-6 bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] z-50 flex h-14 w-14 items-center justify-center rounded-full border border-border-strong bg-primary text-primary-foreground transition-transform hover:scale-105 active:scale-95 sm:bottom-6"
+          className="fixed right-6 bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] z-50 flex h-14 w-14 items-center justify-center rounded-full border border-border-strong bg-primary text-primary-foreground transition-transform hover:scale-105 active:scale-95"
         >
           <Plus className="h-6 w-6" />
         </button>
