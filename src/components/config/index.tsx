@@ -125,7 +125,7 @@ export function ConfigPage({
   };
 
   return (
-    <div className="container mx-auto flex max-w-2xl flex-col gap-6 px-4 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] pt-[calc(5.5rem+env(safe-area-inset-top,0px))]">
+    <div className="container mx-auto flex max-w-2xl flex-col gap-6 px-4 pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] pt-[calc(5.5rem+env(safe-area-inset-top,0px))]">
       <header>
         <h2 className="text-xl font-semibold tracking-tight">{t('config.title')}</h2>
         <p className="mt-1 text-sm text-muted-foreground">{t('config.description')}</p>
