@@ -1,3 +1,4 @@
+import { ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { AppLanguage } from '@/lib/settings';
 import { PRIMARY_COLORS } from './constants';
@@ -35,22 +36,23 @@ export function ConfigPage({
           <h3 className="text-sm font-semibold">{t('config.language')}</h3>
           <p className="mt-0.5 text-xs text-muted-foreground">{t('config.languageDescription')}</p>
         </div>
-        <div className="grid gap-2 sm:grid-cols-3">
-          {LANGUAGES.map((option) => (
-            <button
-              key={option.value}
-              type="button"
-              onClick={() => onLanguageChange(option.value)}
-              aria-pressed={language === option.value}
-              className={`rounded-xl border px-3 py-2.5 text-sm font-medium transition ${
-                language === option.value
-                  ? 'border-primary/60 bg-primary/10 text-foreground'
-                  : 'border-border bg-background text-muted-foreground hover:border-border-strong hover:text-foreground'
-              }`}
-            >
-              {t(`config.${option.labelKey}`)}
-            </button>
-          ))}
+        <div className="relative inline-block">
+          <select
+            value={language}
+            aria-label={t('config.language')}
+            onChange={(event) => onLanguageChange(event.target.value as AppLanguage)}
+            className="h-12 w-auto min-w-[12rem] appearance-none rounded-xl border border-border bg-background py-3 pr-11 pl-5 text-sm outline-none transition focus:border-primary/60 focus:ring-2 focus:ring-ring"
+          >
+            {LANGUAGES.map((option) => (
+              <option key={option.value} value={option.value}>
+                {t(`config.${option.labelKey}`)}
+              </option>
+            ))}
+          </select>
+          <ChevronDown
+            className="pointer-events-none absolute top-1/2 right-3.5 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+            aria-hidden
+          />
         </div>
       </section>
 
