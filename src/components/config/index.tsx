@@ -1,6 +1,12 @@
-import { ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { AppLanguage } from '@/lib/settings';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { PRIMARY_COLORS } from './constants';
 
 type Props = {
@@ -36,24 +42,24 @@ export function ConfigPage({
           <h3 className="text-sm font-semibold">{t('config.language')}</h3>
           <p className="mt-0.5 text-xs text-muted-foreground">{t('config.languageDescription')}</p>
         </div>
-        <div className="relative inline-block">
-          <select
-            value={language}
+        <Select
+          value={language}
+          onValueChange={(value) => onLanguageChange(value as AppLanguage)}
+        >
+          <SelectTrigger
             aria-label={t('config.language')}
-            onChange={(event) => onLanguageChange(event.target.value as AppLanguage)}
-            className="h-12 w-auto min-w-48 appearance-none rounded-xl border border-border bg-background py-3 pr-11 pl-5 text-sm outline-hidden transition focus:border-primary/60 focus:ring-2 focus:ring-ring"
+            className="h-12 w-auto min-w-48 rounded-xl border-border bg-background px-5"
           >
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
             {LANGUAGES.map((option) => (
-              <option key={option.value} value={option.value}>
+              <SelectItem key={option.value} value={option.value}>
                 {t(`config.${option.labelKey}`)}
-              </option>
+              </SelectItem>
             ))}
-          </select>
-          <ChevronDown
-            className="pointer-events-none absolute top-1/2 right-3.5 h-4 w-4 -translate-y-1/2 text-muted-foreground"
-            aria-hidden
-          />
-        </div>
+          </SelectContent>
+        </Select>
       </section>
 
       <section className="rounded-2xl border border-border bg-surface p-5">
