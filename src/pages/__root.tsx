@@ -1,5 +1,12 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Outlet, Link, createRootRouteWithContext, useRouter } from '@tanstack/react-router';
+import {
+  Outlet,
+  Link,
+  Navigate,
+  createRootRouteWithContext,
+  useRouter,
+  useRouterState,
+} from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { InstallBanner } from '@/components/InstallBanner';
 import { Toaster } from '@/components/ui/sonner';
@@ -16,7 +23,7 @@ function NotFoundComponent() {
         </p>
         <div className="mt-6">
           <Link
-            to="/"
+            to="/home"
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
             Go home
@@ -51,7 +58,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
             Try again
           </button>
           <a
-            href="/"
+            href="/home"
             className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
           >
             Go home
@@ -70,10 +77,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
 
   useEffect(() => {
     applyPrimaryColor(loadSettings().primary);
   }, []);
+
+  if (pathname === '/') {
+    return <Navigate to="/home" replace />;
+  }
 
   return (
     <QueryClientProvider client={queryClient}>
