@@ -25,7 +25,7 @@ export function ConfigPage({
   const { t } = useTranslation();
 
   return (
-    <div className="container mx-auto max-w-2xl space-y-6 p-4 pt-[calc(5.5rem+env(safe-area-inset-top,0px))] pb-[calc(1rem+env(safe-area-inset-bottom,0px))]">
+    <div className="container mx-auto max-w-2xl space-y-6 p-4 pt-[calc(5.5rem+env(safe-area-inset-top,0px))] pb-4">
       <header>
         <h2 className="text-xl font-semibold tracking-tight">{t('config.title')}</h2>
         <p className="mt-1 text-sm text-muted-foreground">{t('config.description')}</p>
@@ -41,7 +41,7 @@ export function ConfigPage({
             value={language}
             aria-label={t('config.language')}
             onChange={(event) => onLanguageChange(event.target.value as AppLanguage)}
-            className="h-12 w-auto min-w-[12rem] appearance-none rounded-xl border border-border bg-background py-3 pr-11 pl-5 text-sm outline-none transition focus:border-primary/60 focus:ring-2 focus:ring-ring"
+            className="h-12 w-auto min-w-48 appearance-none rounded-xl border border-border bg-background py-3 pr-11 pl-5 text-sm outline-hidden transition focus:border-primary/60 focus:ring-2 focus:ring-ring"
           >
             {LANGUAGES.map((option) => (
               <option key={option.value} value={option.value}>
@@ -63,7 +63,7 @@ export function ConfigPage({
             {t('config.primaryColorDescription')}
           </p>
         </div>
-        <div className="flex flex-wrap gap-2.5">
+        <div className="flex flex-wrap gap-2.5 overflow-hidden p-0.5">
           {PRIMARY_COLORS.map((color) => (
             <button
               key={color.v}
@@ -73,7 +73,7 @@ export function ConfigPage({
               aria-pressed={primary === color.v}
               className={`h-10 w-10 rounded-full border-2 transition ${
                 primary === color.v
-                  ? 'scale-110 border-foreground'
+                  ? 'border-foreground'
                   : 'border-border hover:border-border-strong'
               }`}
               style={{ backgroundColor: color.v }}

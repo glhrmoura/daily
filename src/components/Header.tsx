@@ -8,7 +8,7 @@ export function Header() {
   const isSecondaryPage = pathname === '/relatorio' || pathname === '/config';
 
   return (
-    <header className="fixed top-0 right-0 left-0 z-50 border-b border-border bg-background/95 pt-[env(safe-area-inset-top,0px)] backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="fixed top-0 right-0 left-0 z-50 border-b border-border bg-background/95 pt-[env(safe-area-inset-top,0px)] backdrop-blur-sm supports-backdrop-filter:bg-background/60">
       <div className="container mx-auto max-w-2xl px-4 py-4">
         <div className="flex items-center justify-between gap-3">
           <Link to="/" className="flex items-center gap-3">

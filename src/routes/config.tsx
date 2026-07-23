@@ -11,7 +11,7 @@ function Config() {
   const { settings, setPrimary, setLanguage } = useSettings();
 
   return (
-    <div className="min-h-dvh bg-background">
+    <div className="bg-background">
       <Header />
       <ConfigPage
         primary={settings.primary}

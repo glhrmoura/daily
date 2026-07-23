@@ -91,7 +91,7 @@ export function TaskForm({ open, initial, onClose, onSave }: Props) {
               onChange={(e) => setName(e.target.value)}
               placeholder={t('taskForm.namePlaceholder')}
               autoFocus
-              className="w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm outline-none transition focus:border-primary/60 focus:ring-2 focus:ring-ring"
+              className="w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm outline-hidden transition focus:border-primary/60 focus:ring-2 focus:ring-ring"
             />
           </div>
 
@@ -151,7 +151,7 @@ export function TaskForm({ open, initial, onClose, onSave }: Props) {
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               rows={2}
-              className="w-full resize-none rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm outline-none transition focus:border-primary/60 focus:ring-2 focus:ring-ring"
+              className="w-full resize-none rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm outline-hidden transition focus:border-primary/60 focus:ring-2 focus:ring-ring"
             />
           </div>
         </div>
