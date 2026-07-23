@@ -2,7 +2,7 @@
   "name": "Daily - Checklist diário de tarefas",
   "short_name": "Daily",
   "description": "Checklist diário: as tarefas permanecem nos próximos dias e são desmarcadas automaticamente para serem feitas de novo.",
-  "start_url": "/",
+  "start_url": "/home",
   "display": "standalone",
   "background_color": "#1a191b",
   "theme_color": "#9a4fec",
