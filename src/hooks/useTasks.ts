@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { DayMissedReport, Task } from '@/types/task';
+import type { DailyStore } from '@/lib/storage';
 import { loadDailyStore, resetChecksIfNewDay, saveDailyStore } from '@/lib/storage';
 
 export function useTasks() {
@@ -94,6 +95,21 @@ export function useTasks() {
     setMissed((prev) => prev.filter((report) => report.date !== date));
   }, []);
 
+  const getStore = useCallback((): DailyStore => {
+    return {
+      tasks: tasksRef.current,
+      lastReset: lastResetRef.current,
+      missed: missedRef.current,
+    };
+  }, []);
+
+  const replaceStore = useCallback((store: DailyStore) => {
+    saveDailyStore(store);
+    setTasks(store.tasks);
+    setMissed(store.missed);
+    setLastReset(store.lastReset);
+  }, []);
+
   return {
     tasks,
     missed,
@@ -104,5 +120,7 @@ export function useTasks() {
     toggleChecked,
     removeMissedItem,
     removeMissedDay,
+    getStore,
+    replaceStore,
   };
 }
