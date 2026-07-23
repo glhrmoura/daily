@@ -1,9 +1,9 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { DEFAULT_LANGUAGE, loadSettings } from '@/lib/settings';
-import enUS from './locales/en-US.json';
-import esES from './locales/es-ES.json';
-import ptBR from './locales/pt-BR.json';
+import enUS from './locales/en-us.json';
+import esES from './locales/es-es.json';
+import ptBR from './locales/pt-br.json';
 
 const initialLanguage = loadSettings().language || DEFAULT_LANGUAGE;
 
