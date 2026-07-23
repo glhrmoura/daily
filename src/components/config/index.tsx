@@ -1,5 +1,10 @@
+import { useRef, useState, type ChangeEvent } from 'react';
+import { Download, Upload } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
 import type { AppLanguage } from '@/lib/settings';
+import type { DailyStore } from '@/lib/storage';
+import { createBackup, downloadBackup, readBackupFile } from '@/lib/backup';
 import {
   Select,
   SelectContent,
@@ -7,6 +12,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import { ConfirmDialog } from '@/components/task/ConfirmDialog';
 import { PRIMARY_COLORS } from './constants';
 
 type Props = {
@@ -14,6 +21,8 @@ type Props = {
   language: AppLanguage;
   onPrimaryChange: (primary: string) => void;
   onLanguageChange: (language: AppLanguage) => void;
+  getStore: () => DailyStore;
+  onImportStore: (store: DailyStore) => void;
 };
 
 const LANGUAGES: { value: AppLanguage; labelKey: 'langPt' | 'langEn' | 'langEs' }[] = [
@@ -27,8 +36,49 @@ export function ConfigPage({
   language,
   onPrimaryChange,
   onLanguageChange,
+  getStore,
+  onImportStore,
 }: Props) {
   const { t } = useTranslation();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [pendingImport, setPendingImport] = useState<DailyStore | null>(null);
+
+  const handleExport = () => {
+    try {
+      downloadBackup(createBackup(getStore()));
+      toast.success(t('config.exportSuccess'));
+    } catch {
+      toast.error(t('config.exportError'));
+    }
+  };
+
+  const handleImportClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+    if (!file) return;
+
+    try {
+      const store = await readBackupFile(file);
+      setPendingImport(store);
+    } catch {
+      toast.error(t('config.importInvalid'));
+    }
+  };
+
+  const handleConfirmImport = () => {
+    if (!pendingImport) return;
+    try {
+      onImportStore(pendingImport);
+      setPendingImport(null);
+      toast.success(t('config.importSuccess'));
+    } catch {
+      toast.error(t('config.importError'));
+    }
+  };
 
   return (
     <div className="container mx-auto flex max-w-2xl flex-col gap-6 px-4 pb-4 pt-[calc(5.5rem+env(safe-area-inset-top,0px))]">
@@ -60,6 +110,30 @@ export function ConfigPage({
             ))}
           </SelectContent>
         </Select>
+      </section>
+
+      <section className="rounded-2xl border border-border bg-surface p-5">
+        <div className="mb-4">
+          <h3 className="text-sm font-semibold">{t('config.backup')}</h3>
+          <p className="mt-0.5 text-xs text-muted-foreground">{t('config.backupDescription')}</p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <Button type="button" variant="outline" className="rounded-xl" onClick={handleExport}>
+            <Download />
+            {t('config.export')}
+          </Button>
+          <Button type="button" variant="outline" className="rounded-xl" onClick={handleImportClick}>
+            <Upload />
+            {t('config.import')}
+          </Button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="application/json,.json"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+        </div>
       </section>
 
       <section className="rounded-2xl border border-border bg-surface p-5">
@@ -103,6 +177,17 @@ export function ConfigPage({
           </div>
         </div>
       </section>
+
+      <ConfirmDialog
+        open={!!pendingImport}
+        title={t('config.importTitle')}
+        description={t('config.importDescription', {
+          count: pendingImport?.tasks.length ?? 0,
+        })}
+        confirmLabel={t('config.importConfirm')}
+        onCancel={() => setPendingImport(null)}
+        onConfirm={handleConfirmImport}
+      />
     </div>
   );
 }
