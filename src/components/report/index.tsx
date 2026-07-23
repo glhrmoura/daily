@@ -14,7 +14,7 @@ export function ReportPage({ missed, hydrated, onRemoveItem, onRemoveDay }: Prop
   const { t } = useTranslation();
 
   return (
-    <div className="container mx-auto flex max-w-2xl flex-col gap-6 px-4 pt-[calc(5.5rem+env(safe-area-inset-top,0px))] pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))]">
+    <div className="container mx-auto flex max-w-2xl flex-col gap-6 px-4 pt-[calc(5.5rem+env(safe-area-inset-top,0px))] pb-[calc(2rem+env(safe-area-inset-bottom,0px))]">
       <header>
         <h2 className="text-xl font-semibold tracking-tight">{t('report.title')}</h2>
         <p className="mt-1 text-sm text-muted-foreground">{t('report.description')}</p>
