@@ -30,18 +30,18 @@ export function Header() {
           ) : (
             <div className="flex items-center gap-2">
               <Link
-                to="/config"
-                aria-label="Configurações"
-                className="rounded-xl border border-border bg-surface p-2.5 text-muted-foreground transition hover:border-border-strong hover:text-foreground"
-              >
-                <Settings className="h-5 w-5" />
-              </Link>
-              <Link
                 to="/relatorio"
                 aria-label="Relatório de não concluídos"
                 className="rounded-xl border border-border bg-surface p-2.5 text-muted-foreground transition hover:border-border-strong hover:text-foreground"
               >
                 <ClipboardList className="h-5 w-5" />
+              </Link>
+              <Link
+                to="/config"
+                aria-label="Configurações"
+                className="rounded-xl border border-border bg-surface p-2.5 text-muted-foreground transition hover:border-border-strong hover:text-foreground"
+              >
+                <Settings className="h-5 w-5" />
               </Link>
             </div>
           )}
