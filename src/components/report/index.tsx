@@ -16,7 +16,7 @@ export function ReportPage({ missed, hydrated, onRemoveItem, onRemoveDay }: Prop
   return (
     <div className="container mx-auto max-w-2xl space-y-6 p-4 pt-[calc(5.5rem+env(safe-area-inset-top,0px))] pb-24">
       <header>
-        <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">{t('report.title')}</h2>
+        <h2 className="text-xl font-semibold tracking-tight">{t('report.title')}</h2>
         <p className="mt-1 text-sm text-muted-foreground">{t('report.description')}</p>
       </header>
 

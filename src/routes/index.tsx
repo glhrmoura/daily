@@ -72,7 +72,7 @@ function Index() {
             <CalendarDays className="h-3.5 w-3.5" />
             <span className="capitalize">{today}</span>
           </div>
-          <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+          <h2 className="mt-2 text-xl font-semibold tracking-tight">
             {t('home.title')}
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">{t('home.description')}</p>
