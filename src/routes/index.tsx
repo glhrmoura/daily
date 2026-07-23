@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { CalendarDays, ListChecks, Moon, Plus, Sun, Sunrise } from 'lucide-react';
 import { useTasks } from '@/hooks/useTasks';
 import type { Task } from '@/types/task';
@@ -17,6 +18,7 @@ function sortByName(a: Task, b: Task) {
 }
 
 function Index() {
+  const { t, i18n } = useTranslation();
   const { tasks, hydrated, addTask, updateTask, deleteTask, toggleChecked } = useTasks();
 
   const [formOpen, setFormOpen] = useState(false);
@@ -36,7 +38,7 @@ function Index() {
   const done = tasks.filter((m) => m.checked).length;
   const progress = total === 0 ? 0 : Math.round((done / total) * 100);
 
-  const today = new Date().toLocaleDateString('pt-BR', {
+  const today = new Date().toLocaleDateString(i18n.language, {
     weekday: 'long',
     day: '2-digit',
     month: 'long',
@@ -70,11 +72,10 @@ function Index() {
             <CalendarDays className="h-3.5 w-3.5" />
             <span className="capitalize">{today}</span>
           </div>
-          <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Rotina de hoje</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            As tarefas cadastradas permanecem nos próximos dias e são desmarcadas automaticamente
-            para serem feitas de novo.
-          </p>
+          <h2 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+            {t('home.title')}
+          </h2>
+          <p className="mt-1 text-sm text-muted-foreground">{t('home.description')}</p>
         </header>
 
         {hydrated && total === 0 ? (
@@ -82,21 +83,19 @@ function Index() {
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-border bg-surface text-primary">
               <ListChecks className="h-5 w-5" />
             </div>
-            <h3 className="font-semibold">Nenhuma tarefa cadastrada</h3>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Adicione sua primeira tarefa para começar.
-            </p>
+            <h3 className="font-semibold">{t('home.emptyTitle')}</h3>
+            <p className="mt-1 text-sm text-muted-foreground">{t('home.emptyDescription')}</p>
             <button
               onClick={openNew}
               className="mt-5 inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition hover:brightness-110"
             >
-              <Plus className="h-4 w-4" /> Adicionar tarefa
+              <Plus className="h-4 w-4" /> {t('home.addTask')}
             </button>
           </div>
         ) : (
           <div className="space-y-7">
             <PeriodSection
-              title="Manhã"
+              title={t('periods.morning')}
               icon={<Sunrise className="h-4 w-4 text-morning" />}
               accent="bg-surface"
               tasks={grouped.morning}
@@ -105,7 +104,7 @@ function Index() {
               onDelete={setToDelete}
             />
             <PeriodSection
-              title="Tarde"
+              title={t('periods.afternoon')}
               icon={<Sun className="h-4 w-4 text-afternoon" />}
               accent="bg-surface"
               tasks={grouped.afternoon}
@@ -114,7 +113,7 @@ function Index() {
               onDelete={setToDelete}
             />
             <PeriodSection
-              title="Noite"
+              title={t('periods.night')}
               icon={<Moon className="h-4 w-4 text-night" />}
               accent="bg-surface"
               tasks={grouped.night}
@@ -127,10 +126,13 @@ function Index() {
                 <div className="flex items-baseline justify-between">
                   <div>
                     <div className="text-2xl font-semibold tracking-tight">
-                      {done} <span className="text-muted-foreground">de {total}</span>
+                      {done}{' '}
+                      <span className="text-muted-foreground">
+                        {t('home.of')} {total}
+                      </span>
                     </div>
                     <div className="mt-0.5 text-xs uppercase tracking-wider text-muted-foreground">
-                      concluídas hoje
+                      {t('home.completedToday')}
                     </div>
                   </div>
                   <div className="text-2xl font-semibold tracking-tight text-primary">
@@ -155,10 +157,13 @@ function Index() {
             <div className="flex items-baseline justify-between">
               <div>
                 <div className="text-2xl font-semibold tracking-tight">
-                  {done} <span className="text-muted-foreground">de {total}</span>
+                  {done}{' '}
+                  <span className="text-muted-foreground">
+                    {t('home.of')} {total}
+                  </span>
                 </div>
                 <div className="mt-0.5 text-xs uppercase tracking-wider text-muted-foreground">
-                  concluídas hoje
+                  {t('home.completedToday')}
                 </div>
               </div>
               <div className="text-2xl font-semibold tracking-tight text-primary">{progress}%</div>
@@ -175,7 +180,7 @@ function Index() {
 
       <button
         onClick={openNew}
-        aria-label="Adicionar tarefa"
+        aria-label={t('home.addTask')}
         className={`fixed right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full border border-border-strong bg-primary text-primary-foreground transition-transform hover:scale-105 active:scale-95 ${
           total > 0
             ? 'bottom-[calc(9.5rem+env(safe-area-inset-bottom,0px))] sm:bottom-6'
@@ -194,9 +199,11 @@ function Index() {
 
       <ConfirmDialog
         open={!!toDelete}
-        title="Excluir tarefa?"
-        description={toDelete ? `"${toDelete.name}" será removida permanentemente.` : undefined}
-        confirmLabel="Excluir"
+        title={t('home.deleteTitle')}
+        description={
+          toDelete ? t('home.deleteDescription', { name: toDelete.name }) : undefined
+        }
+        confirmLabel={t('home.deleteConfirm')}
         onCancel={() => setToDelete(null)}
         onConfirm={() => {
           if (toDelete) deleteTask(toDelete.id);

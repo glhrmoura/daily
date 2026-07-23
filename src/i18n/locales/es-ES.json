@@ -1,0 +1,86 @@
+{
+  "app": {
+    "name": "Daily",
+    "tagline": "Checklist diario"
+  },
+  "nav": {
+    "back": "Volver",
+    "backHome": "Volver al inicio",
+    "report": "Informe de no completados",
+    "settings": "Configuración"
+  },
+  "home": {
+    "title": "Rutina de hoy",
+    "description": "Las tareas guardadas permanecen los días siguientes y se desmarcan automáticamente para hacerlas de nuevo.",
+    "emptyTitle": "Ninguna tarea registrada",
+    "emptyDescription": "Agrega tu primera tarea para empezar.",
+    "addTask": "Agregar tarea",
+    "completedToday": "completadas hoy",
+    "of": "de",
+    "deleteTitle": "¿Eliminar tarea?",
+    "deleteDescription": "\"{{name}}\" se eliminará permanentemente.",
+    "deleteConfirm": "Eliminar"
+  },
+  "periods": {
+    "morning": "Mañana",
+    "afternoon": "Tarde",
+    "night": "Noche"
+  },
+  "taskForm": {
+    "new": "Nueva tarea",
+    "edit": "Editar tarea",
+    "close": "Cerrar",
+    "name": "Nombre",
+    "namePlaceholder": "Ej: Meditar 10 minutos",
+    "period": "Período",
+    "color": "Color",
+    "notes": "Notas",
+    "optional": "(opcional)",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "colorDefault": "Predeterminado",
+    "colorPurple": "Morado",
+    "colorLilac": "Lila",
+    "colorGreen": "Verde",
+    "colorCoral": "Coral",
+    "colorBlue": "Azul",
+    "colorYellow": "Amarillo"
+  },
+  "common": {
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "markDone": "Marcar {{name}} como hecha",
+    "markUndone": "Desmarcar {{name}}"
+  },
+  "report": {
+    "title": "No completados",
+    "description": "Historial de ítems pendientes de cada día, antes de que el checklist se reinicie.",
+    "emptyTitle": "Ningún pendiente registrado",
+    "emptyDescription": "Cuando un día termine con ítems sin completar, aparecerán aquí.",
+    "itemSingular": "ítem no completado",
+    "itemPlural": "ítems no completados",
+    "removeItem": "Eliminar {{name}}",
+    "removeDay": "Eliminar día {{date}}"
+  },
+  "config": {
+    "title": "Configuración",
+    "description": "Personaliza la apariencia de Daily.",
+    "primaryColor": "Color principal",
+    "primaryColorDescription": "Define botones, progreso y destacados de la app.",
+    "language": "Idioma",
+    "languageDescription": "Elige el idioma de la interfaz.",
+    "example": "Ejemplo",
+    "exampleDescription": "Vista previa de cómo aparece el color en la app.",
+    "exampleButton": "Ejemplo",
+    "langPt": "Português (Brasil)",
+    "langEn": "English (US)",
+    "langEs": "Español (España)"
+  },
+  "install": {
+    "title": "Instalar Daily",
+    "description": "Instala la app para acceder rápido a tu rutina",
+    "action": "Instalar"
+  }
+}

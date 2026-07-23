@@ -1,7 +1,9 @@
 import { Link, useRouterState } from '@tanstack/react-router';
 import { ArrowLeft, ClipboardList, ListTodo, Settings } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export function Header() {
+  const { t } = useTranslation();
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   const isSecondaryPage = pathname === '/relatorio' || pathname === '/config';
 
@@ -14,31 +16,31 @@ export function Header() {
               <ListTodo className="h-5 w-5" strokeWidth={2.25} />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-foreground">Daily</h1>
-              <p className="text-xs text-muted-foreground">Checklist diário</p>
+              <h1 className="text-xl font-bold text-foreground">{t('app.name')}</h1>
+              <p className="text-xs text-muted-foreground">{t('app.tagline')}</p>
             </div>
           </Link>
           {isSecondaryPage ? (
             <Link
               to="/"
-              aria-label="Voltar para home"
+              aria-label={t('nav.backHome')}
               className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface px-3 py-2.5 text-sm font-medium text-muted-foreground transition hover:border-border-strong hover:text-foreground"
             >
               <ArrowLeft className="h-4 w-4" />
-              Voltar
+              {t('nav.back')}
             </Link>
           ) : (
             <div className="flex items-center gap-2">
               <Link
                 to="/relatorio"
-                aria-label="Relatório de não concluídos"
+                aria-label={t('nav.report')}
                 className="rounded-xl border border-border bg-surface p-2.5 text-muted-foreground transition hover:border-border-strong hover:text-foreground"
               >
                 <ClipboardList className="h-5 w-5" />
               </Link>
               <Link
                 to="/config"
-                aria-label="Configurações"
+                aria-label={t('nav.settings')}
                 className="rounded-xl border border-border bg-surface p-2.5 text-muted-foreground transition hover:border-border-strong hover:text-foreground"
               >
                 <Settings className="h-5 w-5" />

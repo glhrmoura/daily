@@ -1,5 +1,6 @@
 import { Check, Pencil, Trash2 } from 'lucide-react';
 import type { KeyboardEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Task } from '@/types/task';
 import { cn } from '@/lib/utils';
 
@@ -11,6 +12,7 @@ type Props = {
 };
 
 export function TaskCard({ task, onToggle, onEdit, onDelete }: Props) {
+  const { t } = useTranslation();
   const { checked } = task;
 
   const toggle = () => onToggle(task.id);
@@ -29,7 +31,11 @@ export function TaskCard({ task, onToggle, onEdit, onDelete }: Props) {
       onClick={toggle}
       onKeyDown={onKeyDown}
       aria-pressed={checked}
-      aria-label={checked ? `Desmarcar ${task.name}` : `Marcar ${task.name} como concluída`}
+      aria-label={
+        checked
+          ? t('common.markUndone', { name: task.name })
+          : t('common.markDone', { name: task.name })
+      }
       className={cn(
         'group relative flex w-full cursor-pointer items-center gap-4 rounded-2xl border p-4 text-left transition-all duration-300',
         checked
@@ -78,7 +84,7 @@ export function TaskCard({ task, onToggle, onEdit, onDelete }: Props) {
           }}
           onPointerDown={(e) => e.stopPropagation()}
           className="rounded-lg p-2 text-muted-foreground transition hover:bg-accent hover:text-foreground"
-          aria-label="Editar"
+          aria-label={t('common.edit')}
         >
           <Pencil className="h-4 w-4" />
         </button>
@@ -90,7 +96,7 @@ export function TaskCard({ task, onToggle, onEdit, onDelete }: Props) {
           }}
           onPointerDown={(e) => e.stopPropagation()}
           className="rounded-lg p-2 text-muted-foreground transition hover:bg-destructive/15 hover:text-destructive"
-          aria-label="Excluir"
+          aria-label={t('common.delete')}
         >
           <Trash2 className="h-4 w-4" />
         </button>

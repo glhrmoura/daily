@@ -1,0 +1,86 @@
+{
+  "app": {
+    "name": "Daily",
+    "tagline": "Daily checklist"
+  },
+  "nav": {
+    "back": "Back",
+    "backHome": "Back to home",
+    "report": "Unfinished items report",
+    "settings": "Settings"
+  },
+  "home": {
+    "title": "Today's routine",
+    "description": "Saved tasks stay for the next days and are unchecked automatically so you can do them again.",
+    "emptyTitle": "No tasks yet",
+    "emptyDescription": "Add your first task to get started.",
+    "addTask": "Add task",
+    "completedToday": "completed today",
+    "of": "of",
+    "deleteTitle": "Delete task?",
+    "deleteDescription": "\"{{name}}\" will be permanently removed.",
+    "deleteConfirm": "Delete"
+  },
+  "periods": {
+    "morning": "Morning",
+    "afternoon": "Afternoon",
+    "night": "Night"
+  },
+  "taskForm": {
+    "new": "New task",
+    "edit": "Edit task",
+    "close": "Close",
+    "name": "Name",
+    "namePlaceholder": "E.g. Meditate for 10 minutes",
+    "period": "Period",
+    "color": "Color",
+    "notes": "Notes",
+    "optional": "(optional)",
+    "cancel": "Cancel",
+    "save": "Save",
+    "colorDefault": "Default",
+    "colorPurple": "Purple",
+    "colorLilac": "Lilac",
+    "colorGreen": "Green",
+    "colorCoral": "Coral",
+    "colorBlue": "Blue",
+    "colorYellow": "Yellow"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "edit": "Edit",
+    "delete": "Delete",
+    "markDone": "Mark {{name}} as done",
+    "markUndone": "Unmark {{name}}"
+  },
+  "report": {
+    "title": "Unfinished",
+    "description": "History of items left pending each day, before the checklist resets.",
+    "emptyTitle": "No pending items recorded",
+    "emptyDescription": "When a day ends with unfinished items, they show up here.",
+    "itemSingular": "unfinished item",
+    "itemPlural": "unfinished items",
+    "removeItem": "Remove {{name}}",
+    "removeDay": "Remove day {{date}}"
+  },
+  "config": {
+    "title": "Settings",
+    "description": "Customize Daily's appearance.",
+    "primaryColor": "Primary color",
+    "primaryColorDescription": "Sets buttons, progress and app highlights.",
+    "language": "Language",
+    "languageDescription": "Choose the interface language.",
+    "example": "Example",
+    "exampleDescription": "Preview of how the color appears in the app.",
+    "exampleButton": "Example",
+    "langPt": "Português (Brasil)",
+    "langEn": "English (US)",
+    "langEs": "Español (España)"
+  },
+  "install": {
+    "title": "Install Daily",
+    "description": "Install the app for quick access to your routine",
+    "action": "Install"
+  }
+}

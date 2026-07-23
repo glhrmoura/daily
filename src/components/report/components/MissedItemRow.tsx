@@ -1,6 +1,6 @@
 import { Trash2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import type { MissedItem } from '@/types/task';
-import { PERIOD_LABELS } from '../utils/period';
 
 type Props = {
   item: MissedItem;
@@ -8,6 +8,8 @@ type Props = {
 };
 
 export function MissedItemRow({ item, onRemove }: Props) {
+  const { t } = useTranslation();
+
   return (
     <div
       className="rounded-2xl border border-border bg-card p-4"
@@ -22,12 +24,12 @@ export function MissedItemRow({ item, onRemove }: Props) {
         </div>
         <div className="flex shrink-0 items-center gap-1">
           <span className="rounded-full border border-border bg-surface px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
-            {PERIOD_LABELS[item.period]}
+            {t(`periods.${item.period}`)}
           </span>
           <button
             type="button"
             onClick={onRemove}
-            aria-label={`Remover ${item.name}`}
+            aria-label={t('report.removeItem', { name: item.name })}
             className="rounded-lg p-2 text-muted-foreground transition hover:bg-destructive/15 hover:text-destructive"
           >
             <Trash2 className="h-4 w-4" />

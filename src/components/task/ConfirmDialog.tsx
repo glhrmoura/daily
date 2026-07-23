@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 type Props = {
   open: boolean;
   title: string;
@@ -11,11 +13,14 @@ export function ConfirmDialog({
   open,
   title,
   description,
-  confirmLabel = 'Confirmar',
+  confirmLabel,
   onCancel,
   onConfirm,
 }: Props) {
+  const { t } = useTranslation();
+
   if (!open) return null;
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/70 p-4 backdrop-blur-md animate-in fade-in duration-200">
       <div className="w-full max-w-sm rounded-2xl border border-border bg-surface p-6 animate-in zoom-in-95 duration-200">
@@ -26,13 +31,13 @@ export function ConfirmDialog({
             onClick={onCancel}
             className="flex-1 rounded-xl border border-border bg-background px-4 py-2 text-sm font-medium transition hover:border-border-strong"
           >
-            Cancelar
+            {t('common.cancel')}
           </button>
           <button
             onClick={onConfirm}
             className="flex-1 rounded-xl bg-destructive px-4 py-2 text-sm font-medium text-destructive-foreground transition hover:brightness-110"
           >
-            {confirmLabel}
+            {confirmLabel ?? t('common.confirm')}
           </button>
         </div>
       </div>

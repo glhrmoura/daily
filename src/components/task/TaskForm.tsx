@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { X } from 'lucide-react';
 import type { Task, Period } from '@/types/task';
 
@@ -9,17 +10,20 @@ type Props = {
   onSave: (data: Omit<Task, 'id' | 'checked'>, id?: string) => void;
 };
 
-const COLORS = [
-  { v: '', label: 'Padrão' },
-  { v: '#9a4fec', label: 'Roxo' },
-  { v: '#a874ed', label: 'Lilás' },
-  { v: '#90b070', label: 'Verde' },
-  { v: '#d06070', label: 'Coral' },
-  { v: '#6060d0', label: 'Azul' },
-  { v: '#f0c040', label: 'Amarelo' },
-];
+const COLOR_VALUES = ['', '#9a4fec', '#a874ed', '#90b070', '#d06070', '#6060d0', '#f0c040'] as const;
+
+const COLOR_KEYS = [
+  'colorDefault',
+  'colorPurple',
+  'colorLilac',
+  'colorGreen',
+  'colorCoral',
+  'colorBlue',
+  'colorYellow',
+] as const;
 
 export function TaskForm({ open, initial, onClose, onSave }: Props) {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const [period, setPeriod] = useState<Period>('morning');
   const [notes, setNotes] = useState('');
@@ -51,6 +55,12 @@ export function TaskForm({ open, initial, onClose, onSave }: Props) {
     onClose();
   };
 
+  const periods = [
+    { v: 'morning' as const, label: t('periods.morning') },
+    { v: 'afternoon' as const, label: t('periods.afternoon') },
+    { v: 'night' as const, label: t('periods.night') },
+  ];
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/70 p-4 backdrop-blur-md animate-in fade-in duration-200">
       <form
@@ -59,13 +69,13 @@ export function TaskForm({ open, initial, onClose, onSave }: Props) {
       >
         <div className="mb-5 flex items-center justify-between">
           <h2 className="text-lg font-semibold tracking-tight">
-            {initial ? 'Editar tarefa' : 'Nova tarefa'}
+            {initial ? t('taskForm.edit') : t('taskForm.new')}
           </h2>
           <button
             type="button"
             onClick={onClose}
             className="rounded-lg p-1.5 text-muted-foreground transition hover:bg-accent hover:text-foreground"
-            aria-label="Fechar"
+            aria-label={t('taskForm.close')}
           >
             <X className="h-5 w-5" />
           </button>
@@ -74,12 +84,12 @@ export function TaskForm({ open, initial, onClose, onSave }: Props) {
         <div className="space-y-4">
           <div>
             <label className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              Nome
+              {t('taskForm.name')}
             </label>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Ex: Meditar 10 minutos"
+              placeholder={t('taskForm.namePlaceholder')}
               autoFocus
               className="w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm outline-none transition focus:border-primary/60 focus:ring-2 focus:ring-ring"
             />
@@ -87,16 +97,10 @@ export function TaskForm({ open, initial, onClose, onSave }: Props) {
 
           <div>
             <label className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              Período
+              {t('taskForm.period')}
             </label>
             <div className="grid grid-cols-3 gap-2">
-              {(
-                [
-                  { v: 'morning', label: 'Manhã' },
-                  { v: 'afternoon', label: 'Tarde' },
-                  { v: 'night', label: 'Noite' },
-                ] as const
-              ).map((p) => (
+              {periods.map((p) => (
                 <button
                   key={p.v}
                   type="button"
@@ -115,23 +119,24 @@ export function TaskForm({ open, initial, onClose, onSave }: Props) {
 
           <div>
             <label className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              Cor <span className="normal-case tracking-normal">(opcional)</span>
+              {t('taskForm.color')}{' '}
+              <span className="normal-case tracking-normal">{t('taskForm.optional')}</span>
             </label>
             <div className="flex flex-wrap gap-2">
-              {COLORS.map((c) => (
+              {COLOR_VALUES.map((value, index) => (
                 <button
-                  key={c.v || 'none'}
+                  key={value || 'none'}
                   type="button"
-                  onClick={() => setColor(c.v)}
-                  aria-label={c.label}
+                  onClick={() => setColor(value)}
+                  aria-label={t(`taskForm.${COLOR_KEYS[index]}`)}
                   className={`h-8 w-8 rounded-full border-2 transition ${
-                    color === c.v
+                    color === value
                       ? 'border-foreground scale-110'
                       : 'border-border hover:border-border-strong'
                   }`}
-                  style={c.v ? { backgroundColor: c.v } : undefined}
+                  style={value ? { backgroundColor: value } : undefined}
                 >
-                  {!c.v && <span className="text-xs text-muted-foreground">—</span>}
+                  {!value && <span className="text-xs text-muted-foreground">—</span>}
                 </button>
               ))}
             </div>
@@ -139,7 +144,8 @@ export function TaskForm({ open, initial, onClose, onSave }: Props) {
 
           <div>
             <label className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              Observações <span className="normal-case tracking-normal">(opcional)</span>
+              {t('taskForm.notes')}{' '}
+              <span className="normal-case tracking-normal">{t('taskForm.optional')}</span>
             </label>
             <textarea
               value={notes}
@@ -156,13 +162,13 @@ export function TaskForm({ open, initial, onClose, onSave }: Props) {
             onClick={onClose}
             className="flex-1 rounded-xl border border-border bg-background px-4 py-2.5 text-sm font-medium transition hover:border-border-strong"
           >
-            Cancelar
+            {t('taskForm.cancel')}
           </button>
           <button
             type="submit"
             className="flex-1 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition hover:brightness-110"
           >
-            Salvar
+            {t('taskForm.save')}
           </button>
         </div>
       </form>

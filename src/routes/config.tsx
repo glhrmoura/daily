@@ -8,12 +8,17 @@ export const Route = createFileRoute('/config')({
 });
 
 function Config() {
-  const { settings, setPrimary } = useSettings();
+  const { settings, setPrimary, setLanguage } = useSettings();
 
   return (
     <div className="min-h-dvh bg-background">
       <Header />
-      <ConfigPage primary={settings.primary} onPrimaryChange={setPrimary} />
+      <ConfigPage
+        primary={settings.primary}
+        language={settings.language}
+        onPrimaryChange={setPrimary}
+        onLanguageChange={setLanguage}
+      />
     </div>
   );
 }
