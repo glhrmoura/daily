@@ -381,6 +381,16 @@
   dependencies:
     "@tybys/wasm-util" "^0.10.3"
 
+"@noble/ciphers@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@noble/ciphers/-/ciphers-2.2.0.tgz#84fb45ac9332925d643b80f89ceb0ea2f21dba95"
+  integrity sha512-Z6pjIZ/8IJcCGzb2S/0Px5J81yij85xASuk1teLNeg75bfT07MV3a/O2Mtn1I2se43k3lkVEcFaR10N4cgQcZA==
+
+"@noble/hashes@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-2.2.0.tgz#22da1d16a469954fce877055d559900a6c73b63b"
+  integrity sha512-IYqDGiTXab6FniAgnSdZwgWbomxpy9FtYvLKs7wCUs2a8RkITG+DFGO1DM9cr+E3/RgADRpFjrKVaJ1z6sjtEg==
+
 "@oxc-project/types@=0.139.0":
   version "0.139.0"
   resolved "https://registry.yarnpkg.com/@oxc-project/types/-/types-0.139.0.tgz#38d76b9dbf934c2a02be174fb32ceebf182fe742"
