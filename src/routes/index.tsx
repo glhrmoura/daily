@@ -185,7 +185,6 @@ function Index() {
         title={t('home.deleteTitle')}
         description={toDelete ? t('home.deleteDescription', { name: toDelete.name }) : undefined}
         confirmLabel={t('home.deleteConfirm')}
-        confirmTone="destructive"
         onCancel={() => setToDelete(null)}
         onConfirm={() => {
           if (toDelete) deleteTask(toDelete.id);
