@@ -55,7 +55,7 @@ export function MissedDaySection({
         </button>
       </div>
       {open && (
-        <div className="space-y-2.5 border-t border-border px-4 py-4">
+        <div className="flex flex-col gap-2.5 border-t border-border px-4 py-4">
           {report.items.map((item, index) => (
             <MissedItemRow
               key={`${item.taskId}-${index}`}

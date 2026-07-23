@@ -81,7 +81,7 @@ export function TaskForm({ open, initial, onClose, onSave }: Props) {
           </button>
         </div>
 
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
           <div>
             <label className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted-foreground">
               {t('taskForm.name')}

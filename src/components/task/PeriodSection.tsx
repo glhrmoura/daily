@@ -16,7 +16,7 @@ export function PeriodSection({ title, icon, accent, tasks, onToggle, onEdit, on
   if (tasks.length === 0) return null;
   const done = tasks.filter((m) => m.checked).length;
   return (
-    <section className="space-y-3">
+    <section className="flex flex-col gap-3">
       <div className="flex items-center justify-between px-1">
         <div className="flex items-center gap-2.5">
           <div
@@ -32,7 +32,7 @@ export function PeriodSection({ title, icon, accent, tasks, onToggle, onEdit, on
           {done}/{tasks.length}
         </span>
       </div>
-      <div className="space-y-2.5">
+      <div className="flex flex-col gap-2.5">
         {tasks.map((m) => (
           <TaskCard key={m.id} task={m} onToggle={onToggle} onEdit={onEdit} onDelete={onDelete} />
         ))}
