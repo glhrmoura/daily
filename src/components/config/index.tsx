@@ -4,7 +4,14 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import type { AppLanguage } from '@/lib/settings';
 import type { DailyStore } from '@/lib/storage';
-import { createBackup, downloadBackup, readBackupFile } from '@/lib/backup';
+import type { EncryptedBackupEnvelope } from '@/lib/backup';
+import {
+  createBackup,
+  decryptBackupEnvelope,
+  downloadBackup,
+  downloadEncryptedBackup,
+  readBackupFile,
+} from '@/lib/backup';
 import {
   Select,
   SelectContent,
@@ -14,6 +21,7 @@ import {
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { ConfirmDialog } from '@/components/task/ConfirmDialog';
+import { BackupPasswordDialog } from './components/BackupPasswordDialog';
 import { PRIMARY_COLORS } from './constants';
 
 type Props = {
@@ -41,11 +49,25 @@ export function ConfigPage({
 }: Props) {
   const { t } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [exportOpen, setExportOpen] = useState(false);
+  const [importPasswordOpen, setImportPasswordOpen] = useState(false);
+  const [pendingEncrypted, setPendingEncrypted] = useState<EncryptedBackupEnvelope | null>(null);
   const [pendingImport, setPendingImport] = useState<DailyStore | null>(null);
 
-  const handleExport = () => {
+  const handleExportPlain = () => {
     try {
       downloadBackup(createBackup(getStore()));
+      setExportOpen(false);
+      toast.success(t('config.exportSuccess'));
+    } catch {
+      toast.error(t('config.exportError'));
+    }
+  };
+
+  const handleExportEncrypted = async (password: string) => {
+    try {
+      await downloadEncryptedBackup(createBackup(getStore()), password);
+      setExportOpen(false);
       toast.success(t('config.exportSuccess'));
     } catch {
       toast.error(t('config.exportError'));
@@ -62,9 +84,31 @@ export function ConfigPage({
     if (!file) return;
 
     try {
-      const store = await readBackupFile(file);
-      setPendingImport(store);
+      const inspected = await readBackupFile(file);
+      if (inspected.type === 'encrypted') {
+        setPendingEncrypted(inspected.envelope);
+        setImportPasswordOpen(true);
+        return;
+      }
+      setPendingImport(inspected.store);
     } catch {
+      toast.error(t('config.importInvalid'));
+    }
+  };
+
+  const handleUnlockImport = async (password: string) => {
+    if (!pendingEncrypted) return;
+
+    try {
+      const store = await decryptBackupEnvelope(pendingEncrypted, password);
+      setPendingEncrypted(null);
+      setImportPasswordOpen(false);
+      setPendingImport(store);
+    } catch (error) {
+      if (error instanceof Error && error.message === 'password') {
+        toast.error(t('config.importWrongPassword'));
+        return;
+      }
       toast.error(t('config.importInvalid'));
     }
   };
@@ -118,13 +162,13 @@ export function ConfigPage({
           <p className="mt-0.5 text-xs text-muted-foreground">{t('config.backupDescription')}</p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <Button type="button" variant="outline" className="rounded-xl" onClick={handleExport}>
-            <Download />
-            {t('config.export')}
-          </Button>
-          <Button type="button" variant="outline" className="rounded-xl" onClick={handleImportClick}>
+          <Button type="button" variant="outline" onClick={handleImportClick}>
             <Upload />
             {t('config.import')}
+          </Button>
+          <Button type="button" variant="outline" onClick={() => setExportOpen(true)}>
+            <Download />
+            {t('config.export')}
           </Button>
           <input
             ref={fileInputRef}
@@ -177,6 +221,24 @@ export function ConfigPage({
           </div>
         </div>
       </section>
+
+      <BackupPasswordDialog
+        open={exportOpen}
+        mode="export"
+        onCancel={() => setExportOpen(false)}
+        onExportPlain={handleExportPlain}
+        onSubmit={handleExportEncrypted}
+      />
+
+      <BackupPasswordDialog
+        open={importPasswordOpen}
+        mode="import"
+        onCancel={() => {
+          setImportPasswordOpen(false);
+          setPendingEncrypted(null);
+        }}
+        onSubmit={handleUnlockImport}
+      />
 
       <ConfirmDialog
         open={!!pendingImport}
