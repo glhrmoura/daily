@@ -154,7 +154,7 @@ function Index() {
                   {progress}%
                 </div>
               </div>
-              <div className="mt-4 h-3 overflow-hidden rounded-full border border-border bg-background">
+              <div className="mt-4 h-5 overflow-hidden rounded-full border border-border bg-background">
                 <div
                   className="h-full rounded-full bg-primary transition-all duration-500 ease-out"
                   style={{ width: `${progress}%` }}

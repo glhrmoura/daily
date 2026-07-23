@@ -103,7 +103,7 @@
   :root {
     --home-fab-size: 3.5rem;
     --home-fab-gap: 1.5rem;
-    --home-progress-height: 7.25rem;
+    --home-progress-height: 7.75rem;
   }
 
   @media (max-width: 768px) {
