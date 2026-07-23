@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Outlet, Link, createRootRouteWithContext, useRouter } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { InstallBanner } from '@/components/InstallBanner';
+import { Toaster } from '@/components/ui/sonner';
 import { applyPrimaryColor, loadSettings } from '@/lib/settings';
 
 function NotFoundComponent() {
@@ -78,6 +79,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <InstallBanner />
       <Outlet />
+      <Toaster position="top-right" theme="dark" richColors closeButton />
     </QueryClientProvider>
   );
 }
