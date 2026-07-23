@@ -64,7 +64,7 @@ function Index() {
       }`}
     >
       <Header />
-      <div className="container mx-auto max-w-2xl space-y-6 p-4 pt-[calc(5.5rem+env(safe-area-inset-top,0px))]">
+      <div className="container mx-auto max-w-2xl space-y-6 px-4 pb-4 pt-[calc(5.5rem+env(safe-area-inset-top,0px))]">
         <header>
           <div className="flex items-center gap-2 text-xs font-medium tracking-wide text-muted-foreground">
             <CalendarDays className="h-3.5 w-3.5" />
