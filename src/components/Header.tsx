@@ -5,13 +5,13 @@ import { useTranslation } from 'react-i18next';
 export function Header() {
   const { t } = useTranslation();
   const pathname = useRouterState({ select: (state) => state.location.pathname });
-  const isSecondaryPage = pathname === '/relatorio' || pathname === '/config';
+  const isSecondaryPage = pathname === '/report' || pathname === '/config';
 
   return (
     <header className="fixed top-0 right-0 left-0 z-50 border-b border-border bg-background/95 pt-[env(safe-area-inset-top,0px)] backdrop-blur-sm supports-backdrop-filter:bg-background/60">
       <div className="container mx-auto max-w-2xl px-4 py-4">
         <div className="flex items-center justify-between gap-3">
-          <Link to="/" className="flex items-center gap-3">
+          <Link to="/home" className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/15 text-primary">
               <ListTodo className="h-5 w-5" strokeWidth={2.25} />
             </div>
@@ -22,7 +22,7 @@ export function Header() {
           </Link>
           {isSecondaryPage ? (
             <Link
-              to="/"
+              to="/home"
               aria-label={t('nav.backHome')}
               className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface px-3 py-2.5 text-sm font-medium text-muted-foreground transition hover:border-border-strong hover:text-foreground"
             >
@@ -32,7 +32,7 @@ export function Header() {
           ) : (
             <div className="flex items-center gap-2">
               <Link
-                to="/relatorio"
+                to="/report"
                 aria-label={t('nav.report')}
                 className="rounded-xl border border-border bg-surface p-2.5 text-muted-foreground transition hover:border-border-strong hover:text-foreground"
               >
