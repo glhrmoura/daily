@@ -60,9 +60,7 @@ function Index() {
   return (
     <div
       className={`min-h-dvh bg-background ${
-        total > 0
-          ? 'pb-[calc(8rem+env(safe-area-inset-bottom,0px))] sm:pb-10'
-          : 'pb-24 sm:pb-10'
+        total > 0 ? 'pb-[calc(8rem+env(safe-area-inset-bottom,0px))] sm:pb-10' : 'pb-24 sm:pb-10'
       }`}
     >
       <Header />
@@ -70,11 +68,9 @@ function Index() {
         <header>
           <div className="flex items-center gap-2 text-xs font-medium tracking-wide text-muted-foreground">
             <CalendarDays className="h-3.5 w-3.5" />
-            <span className="capitalize">{today}</span>
+            <span className="uppercase text-[11px]">{today}</span>
           </div>
-          <h2 className="mt-2 text-xl font-semibold tracking-tight">
-            {t('home.title')}
-          </h2>
+          <h2 className="mt-2 text-xl font-semibold tracking-tight">{t('home.title')}</h2>
           <p className="mt-1 text-sm text-muted-foreground">{t('home.description')}</p>
         </header>
 
@@ -200,9 +196,7 @@ function Index() {
       <ConfirmDialog
         open={!!toDelete}
         title={t('home.deleteTitle')}
-        description={
-          toDelete ? t('home.deleteDescription', { name: toDelete.name }) : undefined
-        }
+        description={toDelete ? t('home.deleteDescription', { name: toDelete.name }) : undefined}
         confirmLabel={t('home.deleteConfirm')}
         onCancel={() => setToDelete(null)}
         onConfirm={() => {
