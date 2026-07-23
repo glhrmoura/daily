@@ -3,9 +3,34 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
 
+const DISMISS_KEY = 'daily_install_dismissed';
+
 interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+}
+
+function isStandalone() {
+  return (
+    window.matchMedia('(display-mode: standalone)').matches ||
+    ('standalone' in navigator && Boolean((navigator as Navigator & { standalone?: boolean }).standalone))
+  );
+}
+
+function wasDismissed() {
+  try {
+    return localStorage.getItem(DISMISS_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
+
+function markDismissed() {
+  try {
+    localStorage.setItem(DISMISS_KEY, '1');
+  } catch {
+    return;
+  }
 }
 
 export function InstallBanner() {
@@ -14,6 +39,8 @@ export function InstallBanner() {
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
 
   useEffect(() => {
+    if (isStandalone() || wasDismissed()) return;
+
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
@@ -21,6 +48,7 @@ export function InstallBanner() {
     };
 
     const handleAppInstalled = () => {
+      markDismissed();
       setShowInstallPrompt(false);
       setDeferredPrompt(null);
     };
@@ -41,12 +69,14 @@ export function InstallBanner() {
     const { outcome } = await deferredPrompt.userChoice;
 
     if (outcome === 'accepted') {
+      markDismissed();
       setShowInstallPrompt(false);
       setDeferredPrompt(null);
     }
   };
 
   const handleDismiss = () => {
+    markDismissed();
     setShowInstallPrompt(false);
   };
 
