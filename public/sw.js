@@ -1,4 +1,4 @@
-const APP_VERSION = 6;
+const APP_VERSION = 7;
 const CACHE_NAME = `dailyapp-v${APP_VERSION}`;
 
 const urlsToCache = [
