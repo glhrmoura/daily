@@ -1,6 +1,6 @@
 import type { DayMissedReport, MissedItem, Period, Task } from '@/types/task';
 import type { DailyStore } from '@/lib/storage';
-import { decryptText, encryptText } from '@/lib/backupCrypto';
+import { decryptText, encryptText } from '@/lib/backup-crypto';
 
 const PERIODS = new Set<Period>(['morning', 'afternoon', 'night']);
 const SUPPORTED_VERSION = 1;
