@@ -8,66 +8,59 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as ConfigRouteImport } from './routes/config'
-import { Route as RelatorioRouteImport } from './routes/relatorio'
+import { Route as rootRouteImport } from './../pages/__root'
+import { Route as ConfigRouteImport } from './../pages/config'
+import { Route as HomeRouteImport } from './../pages/home'
+import { Route as ReportRouteImport } from './../pages/report'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ConfigRoute = ConfigRouteImport.update({
   id: '/config',
   path: '/config',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RelatorioRoute = RelatorioRouteImport.update({
-  id: '/relatorio',
-  path: '/relatorio',
+const HomeRoute = HomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportRoute = ReportRouteImport.update({
+  id: '/report',
+  path: '/report',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
   '/config': typeof ConfigRoute
-  '/relatorio': typeof RelatorioRoute
+  '/home': typeof HomeRoute
+  '/report': typeof ReportRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '/config': typeof ConfigRoute
-  '/relatorio': typeof RelatorioRoute
+  '/home': typeof HomeRoute
+  '/report': typeof ReportRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/config': typeof ConfigRoute
-  '/relatorio': typeof RelatorioRoute
+  '/home': typeof HomeRoute
+  '/report': typeof ReportRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/config' | '/relatorio'
+  fullPaths: '/config' | '/home' | '/report'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/config' | '/relatorio'
-  id: '__root__' | '/' | '/config' | '/relatorio'
+  to: '/config' | '/home' | '/report'
+  id: '__root__' | '/config' | '/home' | '/report'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   ConfigRoute: typeof ConfigRoute
-  RelatorioRoute: typeof RelatorioRoute
+  HomeRoute: typeof HomeRoute
+  ReportRoute: typeof ReportRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/config': {
       id: '/config'
       path: '/config'
@@ -75,20 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConfigRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/relatorio': {
-      id: '/relatorio'
-      path: '/relatorio'
-      fullPath: '/relatorio'
-      preLoaderRoute: typeof RelatorioRouteImport
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/report': {
+      id: '/report'
+      path: '/report'
+      fullPath: '/report'
+      preLoaderRoute: typeof ReportRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   ConfigRoute: ConfigRoute,
-  RelatorioRoute: RelatorioRoute,
+  HomeRoute: HomeRoute,
+  ReportRoute: ReportRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
