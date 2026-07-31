@@ -98,6 +98,10 @@
     "example": "Example",
     "exampleDescription": "Preview of how the color appears in the app.",
     "exampleButton": "Example",
+    "version": "Version",
+    "versionDescription": "Current app version.",
+    "versionValue": "{{version}}",
+    "versionUnavailable": "—",
     "langPt": "Português (Brasil)",
     "langEn": "English (US)",
     "langEs": "Español (España)"

@@ -22,6 +22,7 @@ const devices = [
   { width: 393, height: 852, ratio: 3 },
   { width: 430, height: 932, ratio: 3 },
   { width: 402, height: 874, ratio: 3 },
+  { width: 420, height: 912, ratio: 3 },
   { width: 440, height: 956, ratio: 3 },
   { width: 744, height: 1133, ratio: 2 },
   { width: 768, height: 1024, ratio: 2 },
@@ -37,7 +38,7 @@ const icon = sharp(iconPath);
 const links = [];
 
 async function createSplash(pixelWidth, pixelHeight) {
-  const iconSize = Math.round(Math.min(pixelWidth, pixelHeight) * 0.28);
+  const iconSize = Math.round(Math.min(pixelWidth, pixelHeight) * 0.32);
   const resizedIcon = await icon
     .clone()
     .resize(iconSize, iconSize, { fit: 'contain', background })
@@ -73,13 +74,13 @@ for (const device of devices) {
   const portraitHref = await createSplash(portraitWidth, portraitHeight);
   const landscapeHref = await createSplash(landscapeWidth, landscapeHeight);
 
-  const mediaBase = `screen and (device-width: ${device.width}px) and (device-height: ${device.height}px) and (-webkit-device-pixel-ratio: ${device.ratio})`;
+  const mediaBase = `(device-width: ${device.width}px) and (device-height: ${device.height}px) and (-webkit-device-pixel-ratio: ${device.ratio})`;
 
   links.push(
-    `    <link rel="apple-touch-startup-image" media="${mediaBase} and (orientation: portrait)" href="${portraitHref}" />`,
+    `    <link rel="apple-touch-startup-image" href="${portraitHref}" media="${mediaBase} and (orientation: portrait)" />`,
   );
   links.push(
-    `    <link rel="apple-touch-startup-image" media="${mediaBase} and (orientation: landscape)" href="${landscapeHref}" />`,
+    `    <link rel="apple-touch-startup-image" href="${landscapeHref}" media="${mediaBase} and (orientation: landscape)" />`,
   );
 }
 

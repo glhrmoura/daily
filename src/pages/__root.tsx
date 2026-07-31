@@ -81,6 +81,13 @@ function RootComponent() {
 
   useEffect(() => {
     applyPrimaryColor(loadSettings().primary);
+
+    const splash = document.getElementById('app-splash');
+    if (!splash) return;
+
+    splash.classList.add('is-hidden');
+    const timeout = window.setTimeout(() => splash.remove(), 200);
+    return () => window.clearTimeout(timeout);
   }, []);
 
   if (pathname === '/') {

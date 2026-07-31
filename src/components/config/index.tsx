@@ -21,6 +21,7 @@ import {
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { ConfirmDialog } from '@/components/task/ConfirmDialog';
+import { useAppVersion } from '@/hooks/use-app-version';
 import { BackupPasswordDialog } from './components/BackupPasswordDialog';
 import { PRIMARY_COLORS } from './constants';
 
@@ -48,6 +49,7 @@ export function ConfigPage({
   onImportStore,
 }: Props) {
   const { t } = useTranslation();
+  const appVersion = useAppVersion();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [exportOpen, setExportOpen] = useState(false);
   const [importPasswordOpen, setImportPasswordOpen] = useState(false);
@@ -220,6 +222,16 @@ export function ConfigPage({
             </button>
           </div>
         </div>
+      </section>
+
+      <section className="rounded-2xl border border-border bg-surface p-5">
+        <div className="mb-1">
+          <h3 className="text-sm font-semibold">{t('config.version')}</h3>
+          <p className="mt-0.5 text-xs text-muted-foreground">{t('config.versionDescription')}</p>
+        </div>
+        <p className="text-sm text-foreground">
+          {appVersion === null ? t('config.versionUnavailable') : t('config.versionValue', { version: appVersion })}
+        </p>
       </section>
 
       <BackupPasswordDialog
