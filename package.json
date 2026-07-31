@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "pre-push": "node scripts/up-version.js",
+    "deploy": "node scripts/deploy.js",
     "prepare": "husky"
   },
   "dependencies": {

@@ -6,11 +6,10 @@ const swPath = path.join(process.cwd(), 'public', 'sw.js');
 
 try {
   const content = fs.readFileSync(swPath, 'utf8');
-
   const versionMatch = content.match(/const APP_VERSION = (\d+);/);
 
   if (!versionMatch) {
-    console.error('❌ Could not find APP_VERSION in sw.js');
+    console.error('Could not find APP_VERSION in sw.js');
     process.exit(1);
   }
 
@@ -19,19 +18,16 @@ try {
 
   const updatedContent = content.replace(
     /const APP_VERSION = \d+;/,
-    `const APP_VERSION = ${newVersion};`
+    `const APP_VERSION = ${newVersion};`,
   );
 
   fs.writeFileSync(swPath, updatedContent, 'utf8');
 
-  console.log(`✅ Version updated from ${currentVersion} to ${newVersion}`);
-  console.log('📝 Committing version update...');
+  console.log(`Version ${currentVersion} → ${newVersion}`);
 
   execSync(`git add ${swPath}`);
-  execSync(`git commit -m"chore: bump service worker version to ${newVersion}"`);
-
-  console.log('🚀 Ready for push!');
+  execSync(`git commit -m "chore: bump service worker version to ${newVersion}"`);
 } catch (error) {
-  console.error('❌ Error updating version:', error.message);
+  console.error('Failed to bump version:', error.message);
   process.exit(1);
 }
