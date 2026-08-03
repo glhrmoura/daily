@@ -82,11 +82,23 @@ function RootComponent() {
   useEffect(() => {
     applyPrimaryColor(loadSettings().primary);
 
-    const splash = document.getElementById('app-splash');
-    if (!splash) return;
+    const bootScreens = [
+      document.getElementById('app-splash'),
+      document.getElementById('app-skeleton'),
+    ].filter(Boolean);
 
-    splash.classList.add('is-hidden');
-    const timeout = window.setTimeout(() => splash.remove(), 200);
+    if (bootScreens.length === 0) return;
+
+    for (const screen of bootScreens) {
+      screen.classList.add('is-hidden');
+    }
+
+    const timeout = window.setTimeout(() => {
+      for (const screen of bootScreens) {
+        screen.remove();
+      }
+    }, 220);
+
     return () => window.clearTimeout(timeout);
   }, []);
 
