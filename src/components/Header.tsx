@@ -1,5 +1,5 @@
 import { Link, useRouterState } from '@tanstack/react-router';
-import { ArrowLeft, ClipboardList, ListTodo, Settings } from 'lucide-react';
+import { ArrowLeft, ClipboardList, Settings } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export function Header() {
@@ -12,8 +12,8 @@ export function Header() {
       <div className="container mx-auto max-w-2xl px-4 py-4">
         <div className="flex items-center justify-between gap-3">
           <Link to="/home" className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/15 text-primary">
-              <ListTodo className="h-5 w-5" strokeWidth={2.25} />
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg">
+              <img src="/logo.png" alt={t('app.name')} className="h-full w-full object-cover" />
             </div>
             <div>
               <h1 className="text-xl font-bold text-foreground">{t('app.name')}</h1>
