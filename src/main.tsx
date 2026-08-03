@@ -1,4 +1,3 @@
-import { QueryClient } from '@tanstack/react-query';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -8,11 +7,8 @@ import i18n from '@/i18n';
 import { routeTree } from './routes/route-tree.gen';
 import './styles.css';
 
-const queryClient = new QueryClient();
-
 const router = createRouter({
   routeTree,
-  context: { queryClient },
   scrollRestoration: true,
   defaultPreloadStaleTime: 0,
 });

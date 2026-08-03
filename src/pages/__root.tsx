@@ -1,9 +1,8 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
   Outlet,
   Link,
   Navigate,
-  createRootRouteWithContext,
+  createRootRoute,
   useRouter,
   useRouterState,
 } from '@tanstack/react-router';
@@ -69,14 +68,13 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+export const Route = createRootRoute({
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
 
 function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (state) => state.location.pathname });
 
   useEffect(() => {
@@ -85,7 +83,7 @@ function RootComponent() {
     const bootScreens = [
       document.getElementById('app-splash'),
       document.getElementById('app-skeleton'),
-    ].filter(Boolean);
+    ].filter((screen): screen is HTMLElement => screen instanceof HTMLElement);
 
     if (bootScreens.length === 0) return;
 
@@ -107,10 +105,10 @@ function RootComponent() {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <InstallBanner />
       <Outlet />
       <Toaster position="top-right" theme="dark" richColors closeButton />
-    </QueryClientProvider>
+    </>
   );
 }
